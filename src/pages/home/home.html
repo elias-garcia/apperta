@@ -1,14 +1,28 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+  <ion-navbar no-border-bottom>
+    <ion-title>Inicio</ion-title>
   </ion-navbar>
+  <ion-toolbar no-border-top>
+    <ion-searchbar placeholder="Buscar..."></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
-
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+  <ion-card (click)="onCardClick()">
+    <img src="assets/imgs/restaurant.jpeg" />
+    <ion-card-content>
+      <div class="title">
+        <ion-card-title>
+          La Malquerida
+        </ion-card-title>
+        <div class="avg-rating">
+          <h2>4,5/10</h2>
+          <ion-icon name="star"
+                    class="star-icon"></ion-icon>
+        </div>
+      </div>
+      <ion-icon name="compass"
+                class="compass-icon"></ion-icon>
+      <p>Avenida da Mariña 56, 36600, Vilagarcía de Arousa, España</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

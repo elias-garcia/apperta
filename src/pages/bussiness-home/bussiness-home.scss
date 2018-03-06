@@ -1,0 +1,36 @@
+page-bussiness-home {
+  .img-header {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .ratings {
+    display: flex;
+    align-items: center;
+    p {
+      margin: 0 0 0 8px;
+    }
+  }
+
+  .swiper-wrapper {
+    height: 100px;
+    img {
+      object-fit: cover;
+      width: 100%;
+    }
+    .slide-zoom, img {
+      height: 100%;
+    }
+  }
+
+  .view-more-button {
+    height: 100%;
+    width: 100%;
+    .button {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+}

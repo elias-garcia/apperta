@@ -1,0 +1,72 @@
+average-rating {
+
+  .grid, .col {
+    padding: 0;
+  }
+
+  .avg-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    .avg-rating-text {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      h1 {
+        margin: 0;
+      }
+      ion-icon {
+        font-size: 30px;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .row-score-stats {
+    p {
+      margin-left: 10px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .col-left {
+      justify-content: flex-start;
+      ion-icon {
+        margin-left: 5px;
+      }
+    }
+
+    .col-right {
+      justify-content: flex-start;
+    }
+  }
+
+  .row-score-stats, .col-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+  }
+
+  .progress-outer {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    background-color: map-get($colors, light);
+    color: #fff;
+    border-radius: 2px;
+  }
+
+  .progress-inner {
+    height: $font-size-base;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0px;
+    border-radius: 2px;
+    background-color: map-get($colors, primary);
+  }
+
+}

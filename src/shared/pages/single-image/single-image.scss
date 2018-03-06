@@ -1,0 +1,20 @@
+page-single-image {
+  .content {
+    background-color: #000;
+  }
+
+  .scroll-content {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+
+  .toolbar-background {
+    background-color: #000;
+  }
+
+  img {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

@@ -1,3 +1,27 @@
 page-home {
+  .title, .avg-rating {
+    display: flex;
+    align-items: center;
+  }
 
+  .title {
+    justify-content: space-between;
+  }
+
+  .avg-rating {
+    h2 {
+      margin-bottom: 0;
+    }
+  }
+
+  .star-icon {
+    margin-left: 6px;
+    margin-bottom: 3px;
+  }
+
+  .compass-icon {
+    margin-top: 2px;
+    float: left;
+    margin-right: 6px;
+  }
 }

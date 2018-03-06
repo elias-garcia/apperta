@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Mi perfil</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="login-info">
+      <ion-col col-3
+               class="col-icon">
+        <ion-icon name="contact"></ion-icon>
+      </ion-col>
+      <ion-col col-9
+               class="col-text">
+        <h1>¡Hola!</h1>
+        <p>Inicia sesión para añadir tu local a la aplicación o para escribir una reseña</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <button ion-button
+                full
+                (click)="onShowLoginModal()">Inicia sesión</button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="register-row">
+      <ion-col col-12>
+        <button ion-button
+                clear
+                full>O crea una cuenta nueva</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

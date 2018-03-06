@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Iniciar sesión
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button
+              (click)="onCloseModal()">
+        <span ion-text
+              color="primary"
+              showWhen="ios">Cancelar</span>
+        <ion-icon name="md-close"
+                  showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-input placeholder="Email"
+                 type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="Contraseña"
+                 type="password"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <button ion-button
+                full
+                (click)="onLogin()">Iniciar sesión</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

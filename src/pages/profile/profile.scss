@@ -1,0 +1,26 @@
+page-profile {
+  .login-info {
+    display: flex;
+    margin-bottom: 1em;
+
+    .col-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .col-text {
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  ion-icon {
+    font-size: 70px;
+  }
+
+  .register-row {
+    margin-top: -10px;
+  }
+}

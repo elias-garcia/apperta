@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>La Malquerida</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <img src="assets/imgs/restaurant.jpeg"
+       class="img-header"
+       width="100%" />
+  <ion-list>
+    <ion-list-header>
+      Acerca de
+    </ion-list-header>
+    <button ion-item
+            detail-push
+            text-wrap>
+      <ion-icon name="compass"
+                item-start></ion-icon>
+      Rúa Santa Teresa 1, 15002, A Coruña España
+    </button>
+    <a href="tel:699239918"
+       ion-item>
+      <ion-icon name="call"
+                item-start></ion-icon>
+      +34 699 23 99 18
+    </a>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      Fotos
+    </ion-list-header>
+    <ion-item>
+      <ion-slides slidesPerView="3"
+                  spaceBetween="10">
+        <ion-slide>
+          <img src="assets/imgs/restaurant.jpeg"
+               (click)="onViewPhoto()" />
+        </ion-slide>
+        <ion-slide>
+          <img src="assets/imgs/photo1.jpg" />
+        </ion-slide>
+        <ion-slide>
+          <img src="assets/imgs/photo2.jpg" />
+        </ion-slide>
+        <ion-slide>
+          <img src="assets/imgs/restaurant.jpeg" />
+        </ion-slide>
+        <ion-slide>
+          <img src="assets/imgs/restaurant.jpeg" />
+        </ion-slide>
+        <ion-slide>
+          <div class="view-more-button">
+            <button ion-button
+                    outline
+                    (click)="onViewAllPhotos()">Ver todas</button>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      Valoraciones
+    </ion-list-header>
+    <ion-item>
+      <average-rating></average-rating>
+    </ion-item>
+    <button ion-item
+            detail-push
+            text-wrap>
+      <ion-icon name="create"
+                item-start></ion-icon>
+      Escribir una opinión
+    </button>
+  </ion-list>
+</ion-content>

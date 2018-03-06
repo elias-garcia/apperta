@@ -1,0 +1,34 @@
+<ion-grid>
+  <ion-row>
+    <ion-col col-12
+             class="avg-rating">
+      <div class="avg-rating-text">
+        <h1>3,4/5</h1>
+        <ion-icon name="star"></ion-icon>
+      </div>
+      <p>Basado en 201 opiniones</p>
+    </ion-col>
+  </ion-row>
+  <div>
+    <ion-row class="row-score-stats"
+             *ngFor="let scoreStat of scoreStats">
+      <ion-col col-2
+               class="col-left">
+        <p>{{scoreStat.score}}</p>
+        <ion-icon name="star"></ion-icon>
+      </ion-col>
+      <ion-col col-9
+               class="col-mid">
+        <div class="progress-outer">
+          <div class="progress-inner"
+               [style.width]="(scoreStat.count * 100 / totalRatings) + '%'">
+          </div>
+        </div>
+      </ion-col>
+      <ion-col col-1
+               class="col-right">
+        <p>{{scoreStat.count}}</p>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-grid>
