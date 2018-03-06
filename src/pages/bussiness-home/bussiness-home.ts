@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { GalleryPage } from '../gallery/gallery';
 import { SingleImagePage } from '../../shared/pages/single-image/single-image';
+import { MapsPage } from '../maps/maps';
 
 @Component({
   selector: 'page-bussiness-home',
@@ -23,6 +24,10 @@ export class BussinessHomePage {
     const modal = this.modalCtrl.create(SingleImagePage);
 
     modal.present();
+  }
+
+  onOpenMapsPage() {
+    this.navCtrl.push(MapsPage);
   }
 
 }

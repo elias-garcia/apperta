@@ -5,12 +5,14 @@ import { SharedModule } from "../../shared/shared.module";
 import { HomePage } from "./home";
 import { BussinessHomePage } from "../bussiness-home/bussiness-home";
 import { GalleryPage } from "../gallery/gallery";
+import { MapsPage } from "../maps/maps";
 
 @NgModule({
   declarations: [
     HomePage,
     BussinessHomePage,
-    GalleryPage
+    GalleryPage,
+    MapsPage
   ],
   imports: [
     IonicPageModule.forChild(HomePage),
@@ -19,7 +21,8 @@ import { GalleryPage } from "../gallery/gallery";
   entryComponents: [
     HomePage,
     BussinessHomePage,
-    GalleryPage
+    GalleryPage,
+    MapsPage
   ]
 })
 export class HomePageModule { }

@@ -1,6 +1,6 @@
 page-bussiness-home {
   .img-header {
-    height: 200px;
+    height: 250px;
     object-fit: cover;
   }
 
@@ -30,6 +30,30 @@ page-bussiness-home {
       height: 100%;
       width: 100%;
       margin: 0;
+    }
+  }
+
+  .rating {
+    ion-label {
+      display: flex;
+    }
+    .rating-title {
+      white-space: normal;
+    }
+    .rating-subtitle {
+      display: flex;
+      align-items: center;
+      ion-icon {
+        font-size: 1em;
+      }
+      p {
+        margin-left: 10px;
+        margin-bottom: 0;
+      }
+    }
+    .rating-details {
+      white-space: normal;
+      margin-top: 6px;
     }
   }
 

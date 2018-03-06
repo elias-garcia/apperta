@@ -16,7 +16,7 @@ import { ProfilePageModule } from '../pages/profile/profile.module';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HomePageModule,
-    ProfilePageModule
+    ProfilePageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

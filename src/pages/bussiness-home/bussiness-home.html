@@ -13,7 +13,8 @@
     </ion-list-header>
     <button ion-item
             detail-push
-            text-wrap>
+            text-wrap
+            (click)=onOpenMapsPage()>
       <ion-icon name="compass"
                 item-start></ion-icon>
       Rúa Santa Teresa 1, 15002, A Coruña España
@@ -71,6 +72,32 @@
       <ion-icon name="create"
                 item-start></ion-icon>
       Escribir una opinión
+    </button>
+    <ion-item class="rating">
+      <div>
+        <ion-avatar item-start>
+          <img src="assets/imgs/restaurant.jpeg" />
+        </ion-avatar>
+      </div>
+      <div>
+        <h2 class="rating-title">Restaurante totalmente recomendado para unas cañitas</h2>
+        <div class="rating-subtitle">
+          <div>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+          </div>
+          <p>28 Mar. 2018</p>
+        </div>
+        <p class="rating-details">aisdajsdojasdoasnflfshdfa ahisfd lbhfds hdflas ldbfhl asbdlhf sadhlbflabhsldbhsl hafbl </p>
+      </div>
+    </ion-item>
+    <button ion-item
+            detail-push
+            text-wrap>
+      Ver todas las opiniones
     </button>
   </ion-list>
 </ion-content>
