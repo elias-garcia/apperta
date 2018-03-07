@@ -17,25 +17,34 @@
 </ion-header>
 <ion-content padding>
   <form>
-    <ion-item>
-      <ion-label stacked>Nombre</ion-label>
-      <ion-input type="text"
-                 value=""></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>Apellidos</ion-label>
-      <ion-input type="text"
-                 value=""></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>Email</ion-label>
-      <ion-input type="email"
-                 value=""></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>Contraseña</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
+    <ion-list>
+      <ion-list-header>
+        Datos personales
+      </ion-list-header>
+      <ion-item>
+        <ion-label fixed>Nombre</ion-label>
+        <ion-input type="text"
+                   value=""></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Apellidos</ion-label>
+        <ion-input type="text"
+                   value=""></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-list class="second-list">
+      <ion-list-header>
+        Datos de inicio de sesión
+      </ion-list-header>
+      <ion-item>
+        <ion-input type="email"
+                   placeholder="Email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password"
+                   placeholder="Contraseña"></ion-input>
+      </ion-item>
+    </ion-list>
     <button ion-button
             full
             type="submit">Registrarse</button>
