@@ -1,4 +1,19 @@
 page-home {
+
+  .toolbar-search {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .searchbar {
+    padding: 0px 12px !important;
+  }
+
+  .card {
+    margin: 0;
+    width: 100%;
+  }
+
   .title, .avg-rating {
     display: flex;
     align-items: center;

@@ -6,13 +6,15 @@ import { HomePage } from "./home";
 import { BussinessHomePage } from "../bussiness-home/bussiness-home";
 import { GalleryPage } from "../gallery/gallery";
 import { MapsPage } from "../maps/maps";
+import { NewRatingPage } from "../new-rating/new-rating";
 
 @NgModule({
   declarations: [
     HomePage,
     BussinessHomePage,
     GalleryPage,
-    MapsPage
+    MapsPage,
+    NewRatingPage
   ],
   imports: [
     IonicPageModule.forChild(HomePage),
@@ -22,7 +24,8 @@ import { MapsPage } from "../maps/maps";
     HomePage,
     BussinessHomePage,
     GalleryPage,
-    MapsPage
+    MapsPage,
+    NewRatingPage
   ]
 })
 export class HomePageModule { }

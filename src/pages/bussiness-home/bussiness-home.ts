@@ -3,6 +3,7 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { GalleryPage } from '../gallery/gallery';
 import { SingleImagePage } from '../../shared/pages/single-image/single-image';
 import { MapsPage } from '../maps/maps';
+import { NewRatingPage } from '../new-rating/new-rating';
 
 @Component({
   selector: 'page-bussiness-home',
@@ -28,6 +29,10 @@ export class BussinessHomePage {
 
   onOpenMapsPage() {
     this.navCtrl.push(MapsPage);
+  }
+
+  onOpenNewRatingPage() {
+    this.navCtrl.push(NewRatingPage);
   }
 
 }

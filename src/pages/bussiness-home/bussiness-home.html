@@ -61,14 +61,15 @@
   </ion-list>
   <ion-list>
     <ion-list-header>
-      Valoraciones
+      Opiniones
     </ion-list-header>
     <ion-item>
       <average-rating></average-rating>
     </ion-item>
     <button ion-item
             detail-push
-            text-wrap>
+            text-wrap
+            (click)="onOpenNewRatingPage()">
       <ion-icon name="create"
                 item-start></ion-icon>
       Escribir una opinión

@@ -16,20 +16,12 @@
         <p>Inicia sesión para añadir tu local a la aplicación o para escribir una reseña</p>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-12>
-        <button ion-button
-                full
-                (click)="onShowLoginModal()">Inicia sesión</button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-12>
-        <button ion-button
-                clear
-                full
-                (click)="onShowRegisterModal()">O crea una cuenta nueva</button>
-      </ion-col>
-    </ion-row>
   </ion-grid>
+  <button ion-button
+          full
+          (click)="onShowLoginModal()">Inicia sesión</button>
+  <button ion-button
+          clear
+          full
+          (click)="onShowRegisterModal()">O crea una cuenta nueva</button>
 </ion-content>

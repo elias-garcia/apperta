@@ -2,11 +2,12 @@
   <ion-navbar no-border-bottom>
     <ion-title>Inicio</ion-title>
   </ion-navbar>
-  <ion-toolbar no-border-top>
+  <ion-toolbar no-border-top
+               class="toolbar-search">
     <ion-searchbar placeholder="Buscar..."></ion-searchbar>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content padding>
   <ion-card (click)="onCardClick()">
     <img src="assets/imgs/restaurant.jpeg" />
     <ion-card-content>
