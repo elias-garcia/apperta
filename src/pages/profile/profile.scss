@@ -1,22 +1,26 @@
 page-profile {
   .login-info {
     display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 16px;
 
     .col-icon {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      ion-icon {
+        font-size: 90px;
+      }
     }
 
     .col-text {
+      padding-left: 8px !important;
+      h1 {
+        margin-bottom: 8px;
+      }
       p {
+        margin-top: 0;
         margin-bottom: 0;
       }
     }
-  }
-
-  ion-icon {
-    font-size: 70px;
   }
 }
