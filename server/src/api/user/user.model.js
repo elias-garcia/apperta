@@ -29,8 +29,6 @@ const userSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
-
 userSchema.pre('save', function (next) {
   const user = this;
 
@@ -46,5 +44,7 @@ userSchema.pre('save', function (next) {
 
   return next();
 });
+
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

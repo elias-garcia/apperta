@@ -4,7 +4,8 @@
   </ion-navbar>
 </ion-header>
 <ion-content no-padding>
-  <ion-grid padding>
+  <ion-grid padding
+            *ngIf="!session">
     <ion-row class="login-info">
       <ion-col col-3
                class="col-icon">
@@ -17,7 +18,8 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div padding>
+  <div padding
+       *ngIf="!session">
     <button ion-button
             full
             (click)="onShowLoginModal()">Inicia sesión</button>
@@ -26,7 +28,7 @@
             full
             (click)="onShowRegisterModal()">O crea una cuenta nueva</button>
   </div>
-  <ion-list>
+  <ion-list *ngIf="session">
     <ion-list-header>
       Menú
     </ion-list-header>
@@ -44,12 +46,20 @@
                 item-start></ion-icon>
       Editar perfil
     </button>
-    <button ion-item
+    <button *ngIf="session.role === Role.ADMIN"
+            ion-item
             detail-push
             (click)="onOpenBusinessApprovalPage()">
       <ion-icon name="done-all"
                 item-start></ion-icon>
       Negocios pendientes de aprobación
+    </button>
+    <button ion-item
+            detail-push
+            (click)="onLogout()">
+      <ion-icon name="power"
+                item-start></ion-icon>
+      Cerrar sesión
     </button>
   </ion-list>
 </ion-content>

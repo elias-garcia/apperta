@@ -43,7 +43,7 @@
       <ion-list-header>
         Datos de inicio de sesión
       </ion-list-header>
-      <ion-item #emailInput>
+      <ion-item>
         <ion-input formControlName="email"
                    type="email"
                    placeholder="Email"></ion-input>
@@ -62,7 +62,7 @@
         </ion-item>
         <ion-label *ngIf="(password.invalid && (password.touched && password.dirty))"
                    class="label-error">La contraseña es obligatoria</ion-label>
-        <ion-item [ngClass]="{'input-error': registerForm.get('passwordGroup').hasError('passwordMatch') && this.platform.is('android')}">
+        <ion-item>
           <ion-input formControlName="passwordConfirm"
                      type="password"
                      placeholder="Repite la contraseña"></ion-input>

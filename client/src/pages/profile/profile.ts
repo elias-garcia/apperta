@@ -4,6 +4,9 @@ import { LoginPage } from '../login/login';
 import { RegisterPage } from '../register/register';
 import { BusinessApprovalPage } from '../business-approval/business-approval';
 import { BusinessRegisterPage } from '../business-register/business-register';
+import { SecurityProvider } from '../../providers/security.provider';
+import { Session } from '../../shared/models/session.model';
+import { Role } from '../../shared/models/role.enum';
 
 @IonicPage()
 @Component({
@@ -12,11 +15,22 @@ import { BusinessRegisterPage } from '../business-register/business-register';
 })
 export class ProfilePage {
 
+  public Role = Role;
+  public session: Session;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public modalCtrl: ModalController
-  ) { }
+    public modalCtrl: ModalController,
+    private securityProvider: SecurityProvider
+  ) {
+    this.securityProvider.getSession().subscribe(
+      (session: Session) => {
+        console.log(session);
+        this.session = session;
+      }
+    )
+  }
 
   onShowLoginModal() {
     const modal = this.modalCtrl.create(LoginPage);
@@ -40,6 +54,10 @@ export class ProfilePage {
 
   onOpenBusinessRegisterPage() {
     this.navCtrl.push(BusinessRegisterPage);
+  }
+
+  onLogout() {
+    this.securityProvider.removeSession();
   }
 
 }

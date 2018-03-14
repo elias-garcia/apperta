@@ -10,10 +10,8 @@ const createData = (arr) => {
 
 const createError = (status, message) => {
   const content = {
-    error: {
-      status,
-      message,
-    },
+    status,
+    message,
   };
 
   return content;

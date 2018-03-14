@@ -1,5 +1,5 @@
-import { Component, ViewChild, Renderer2 } from '@angular/core';
-import { NavController, NavParams, ViewController, LoadingController, Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, ViewController, LoadingController, ToastController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { validateEmail } from '../../shared/validators/email.validator';
 import { validatePasswordMatch } from '../../shared/validators/password-match.validator';
@@ -14,10 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class RegisterPage {
 
-  @ViewChild('emailInput') emailInput: any;
-
   public registerForm: FormGroup;
-  public isAndroid: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -27,13 +24,9 @@ export class RegisterPage {
     private userProvider: UserProvider,
     private securityProvider: SecurityProvider,
     private loadingCtrl: LoadingController,
-    public platform: Platform,
-    private renderer: Renderer2
+    private toastCtrl: ToastController
   ) {
     this.createForm();
-    if (this.platform.is('android')) {
-      this.isAndroid = true;
-    }
   }
 
   createForm() {
@@ -50,8 +43,7 @@ export class RegisterPage {
 
   onSubmitForm() {
     const loading = this.loadingCtrl.create({
-      content: 'Por favor, espere...',
-      dismissOnPageChange: true
+      content: 'Por favor, espere...'
     });
 
     loading.present();
@@ -65,18 +57,29 @@ export class RegisterPage {
 
     this.userProvider.registerUser(registerData).subscribe(
       (res: any) => {
-        console.log(res);
         this.securityProvider.storeSession(res.session);
-        this.navCtrl.pop();
+        loading.dismiss();
+        this.viewCtrl.dismiss();
+        this.showMessage('Te has registrado con éxito!');
       },
       (err: HttpErrorResponse) => {
         loading.dismiss();
         if (err.status === 409) {
           this.email.setErrors({ duplicatedEmail: true });
-          this.renderer.addClass(this.emailInput._elementRef.nativeElement, 'ng-invalid');
+        } else {
+          this.viewCtrl.dismiss();
+          this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.');
         }
       }
     );
+  }
+
+  showMessage(message: string) {
+    let toast = this.toastCtrl.create({
+      message,
+      duration: 3000
+    });
+    toast.present();
   }
 
   onCloseModal() {

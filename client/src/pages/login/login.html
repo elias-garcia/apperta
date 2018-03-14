@@ -16,18 +16,32 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <form>
+  <form [formGroup]="loginForm"
+        (submit)="onSubmitForm()">
     <ion-item>
-      <ion-input type="email"
+      <ion-input formControlName="email"
+                 type="email"
                  placeholder="Email"></ion-input>
     </ion-item>
+    <ion-label *ngIf="(email.hasError('required') && (email.touched && email.dirty))"
+               class="label-error">El email es obligatorio</ion-label>
+    <ion-label *ngIf="(email.hasError('email') && (email.touched && email.dirty))"
+               class="label-error">El email no es válido</ion-label>
+    <ion-label *ngIf="(email.hasError('emailDoesNotExist') && (email.touched && email.dirty))"
+               class="label-error">El email introducido no existe</ion-label>
     <ion-item>
-      <ion-input type="password"
+      <ion-input formControlName="password"
+                 type="password"
                  placeholder="Contraseña"></ion-input>
     </ion-item>
+    <ion-label *ngIf="(password.hasError('required') && (password.touched && password.dirty))"
+               class="label-error">La contraseña es obligatoria</ion-label>
+    <ion-label *ngIf="(password.hasError('passwordDoesNotMatch') && (password.touched && password.dirty))"
+               class="label-error">La contraseña introducida es errónea</ion-label>
     <button ion-button
             full
-            type="submit">Iniciar sesión</button>
+            type="submit"
+            [disabled]="loginForm.invalid">Iniciar sesión</button>
   </form>
   <button ion-button
           full
