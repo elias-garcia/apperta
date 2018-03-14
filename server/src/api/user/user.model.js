@@ -1,6 +1,7 @@
 /* eslint-disable func-names */
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const Roles = require('./roles.enum');
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -19,6 +20,12 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  role: {
+    type: String,
+    enum: Object.keys(Roles).map(key => Roles[key]),
+    required: true,
+    default: Roles.USER,
   },
 }, { timestamps: true });
 

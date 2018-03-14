@@ -8,9 +8,9 @@ const sendPasswordResetToken = async (email, userId, token) => {
     await transporter.sendMail({
       from: 'Sender Name <sender@example.com>',
       to: email,
-      subject: 'Sporter App - Reset password',
-      text: token,
-      html: `<p>token: ${userId} and userId: ${token}</p>`,
+      subject: 'Reset password',
+      text: `token: ${token}`,
+      html: `<p>token: ${token}</p>`,
     });
   } catch (err) {
     throw (err);

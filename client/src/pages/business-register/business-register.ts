@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild, Renderer2 } from '@angular/core';
+import { NavController, NavParams, Content } from 'ionic-angular';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { } from '@types/googlemaps';
 
@@ -9,16 +9,20 @@ import { } from '@types/googlemaps';
 })
 export class BusinessRegisterPage {
 
+  @ViewChild(Content) content: Content;
   @ViewChild('locationInput') locationInput: any;
+  @ViewChild('coverImageInput') coverImageInput: any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private renderer: Renderer2
   ) { }
 
   ionViewDidLoad() {
     this.initAutocomplete();
+    this.hideAutocompleteOnScroll();
   }
 
   initAutocomplete() {
@@ -40,6 +44,20 @@ export class BusinessRegisterPage {
     autocomplete.addListener('place_changed', () => {
       console.log(autocomplete.getPlace());
     });
+  }
+
+  hideAutocompleteOnScroll() {
+    this.content.ionScroll.subscribe((event) => {
+      const element = this.renderer.selectRootElement('.pac-container');
+
+      if (element) {
+        this.renderer.setStyle(element, 'display', 'none');
+      }
+    });
+  }
+
+  onOpenFilePicker() {
+    this.coverImageInput.nativeElement.click();
   }
 
 }

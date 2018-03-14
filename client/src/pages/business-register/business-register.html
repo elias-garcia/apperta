@@ -31,7 +31,11 @@
         Foto de portada
       </ion-list-header>
       <ion-item class="item-img">
-        <img src="assets/imgs/img-placeholder.png">
+        <img src="assets/imgs/img-placeholder.png"
+             (click)="onOpenFilePicker()">
+        <input #coverImageInput
+               type="file"
+               src="assets/imgs/img-placeholder.png">
       </ion-item>
     </ion-list>
     <button ion-button

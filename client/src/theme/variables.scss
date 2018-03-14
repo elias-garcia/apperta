@@ -86,3 +86,29 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+
+// Custom Global CSS
+// --------------------------------------------------
+
+.pac-container {
+  box-shadow: none !important;
+  border-top: none !important;
+  border-bottom: 1px solid #e6e6e6;
+  width: auto !important;
+  margin-top: 14px;
+  left: 16px !important;
+  right: 16px !important;
+  .pac-item:nth-child(1) {
+    border-top: none;
+  }
+}
+
+.text-input-md{
+  margin-left: 0 !important;
+}
+
+.label-error {
+  color: color($colors, danger);
+  margin-bottom: 0 !important;
+}

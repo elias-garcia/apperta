@@ -1,10 +1,8 @@
 const createData = (arr) => {
-  const content = {
-    data: {},
-  };
+  const content = {};
 
   arr.forEach((elem) => {
-    content.data[elem.title] = elem.data;
+    content[elem.title] = elem.data;
   });
 
   return content;
