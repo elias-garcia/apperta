@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { RegisterPage } from '../register/register';
+import { BusinessApprovalPage } from '../business-approval/business-approval';
+import { BusinessRegisterPage } from '../business-register/business-register';
 
 @IonicPage()
 @Component({
@@ -26,6 +28,18 @@ export class ProfilePage {
     const modal = this.modalCtrl.create(RegisterPage);
 
     modal.present();
+  }
+
+  onOpenEditProfilePage() {
+    this.navCtrl.push(RegisterPage);
+  }
+
+  onOpenBusinessApprovalPage() {
+    this.navCtrl.push(BusinessApprovalPage);
+  }
+
+  onOpenBusinessRegisterPage() {
+    this.navCtrl.push(BusinessRegisterPage);
   }
 
 }

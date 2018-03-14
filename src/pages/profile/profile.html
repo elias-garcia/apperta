@@ -3,8 +3,8 @@
     <ion-title>Mi perfil</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-  <ion-grid no-padding>
+<ion-content no-padding>
+  <ion-grid padding>
     <ion-row class="login-info">
       <ion-col col-3
                class="col-icon">
@@ -17,11 +17,39 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <button ion-button
-          full
-          (click)="onShowLoginModal()">Inicia sesión</button>
-  <button ion-button
-          clear
-          full
-          (click)="onShowRegisterModal()">O crea una cuenta nueva</button>
+  <div padding>
+    <button ion-button
+            full
+            (click)="onShowLoginModal()">Inicia sesión</button>
+    <button ion-button
+            clear
+            full
+            (click)="onShowRegisterModal()">O crea una cuenta nueva</button>
+  </div>
+  <ion-list>
+    <ion-list-header>
+      Menú
+    </ion-list-header>
+    <button ion-item
+            detail-push
+            (click)="onOpenBusinessRegisterPage()">
+      <ion-icon name="home"
+                item-start></ion-icon>
+      Registrar negocio
+    </button>
+    <button ion-item
+            detail-push
+            (click)="onOpenEditProfilePage()">
+      <ion-icon name="person"
+                item-start></ion-icon>
+      Editar perfil
+    </button>
+    <button ion-item
+            detail-push
+            (click)="onOpenBusinessApprovalPage()">
+      <ion-icon name="done-all"
+                item-start></ion-icon>
+      Negocios pendientes de aprobación
+    </button>
+  </ion-list>
 </ion-content>

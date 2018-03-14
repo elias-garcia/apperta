@@ -1,0 +1,27 @@
+page-business-register {
+
+  .list-header-md {
+    border-top: none;
+  }
+
+  .item {
+    padding-left: 0;
+  }
+
+  .button {
+    margin-top: 32px;
+  }
+
+  .item-img {
+    .item-inner {
+      padding-right: 0 !important;
+    }
+    .label {
+      margin-right: 0 !important;
+    }
+    img {
+      width: 100%;
+    }
+  }
+
+}

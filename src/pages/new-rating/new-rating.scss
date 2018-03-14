@@ -1,8 +1,18 @@
 page-new-rating {
+
   .item {
     padding-left: 0;
   }
+
   .button-default {
-    margin-top: 16px;
+    margin-top: 32px;
   }
+
+  .stars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+  }
+
 }

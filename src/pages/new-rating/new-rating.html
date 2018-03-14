@@ -6,6 +6,19 @@
 <ion-content padding>
   <form>
     <ion-item>
+      <div class="stars d-flex justify-content-center align-items-center">
+        <div class="star"
+             *ngFor="let ratingStar of ratingStars">
+          <ion-icon name="star"
+                    *ngIf="ratingStar.hover"
+                    (click)="onPickRating(ratingStar.value)"></ion-icon>
+          <ion-icon name="star-outline"
+                    *ngIf="!ratingStar.hover"
+                    (click)="onPickRating(ratingStar.value)"></ion-icon>
+        </div>
+      </div>
+    </ion-item>
+    <ion-item>
       <ion-input type="text"
                  placeholder="Título"></ion-input>
     </ion-item>

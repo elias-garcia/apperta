@@ -40,4 +40,24 @@ page-home {
     float: left;
     margin-right: 8px;
   }
+
+  ion-fab[center] {
+    margin-left: -50px;
+    button.fab {
+      width: 100px;
+      height: 40px;
+      border-radius: 50px;
+      ion-icon {
+        color: color($colors, primary);
+        flex: 0;
+        margin-right: 12px;
+      }
+      .button-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
 }
