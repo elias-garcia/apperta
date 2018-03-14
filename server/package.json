@@ -1,0 +1,33 @@
+{
+  "name": "sporter-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon ./src/app.js",
+    "start": "node ./src/app.js",
+    "lint": "eslint ./src"
+  },
+  "author": "Elías García",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/elias-garcia/sporter-app.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.16.2",
+    "helmet": "^3.9.0",
+    "jsonwebtoken": "^7.4.3",
+    "moment": "^2.19.2",
+    "mongoose": "^4.13.4",
+    "morgan": "^1.8.2",
+    "nodemailer": "^4.4.0",
+    "validator": "^8.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "nodemon": "^1.12.0"
+  }
+}
