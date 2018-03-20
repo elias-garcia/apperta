@@ -7,6 +7,7 @@ import { RegisterPage } from '../register/register';
 import { BusinessApprovalPage } from '../business-approval/business-approval';
 import { BusinessRegisterPage } from '../business-register/business-register';
 import { Geolocation } from '@ionic-native/geolocation';
+import { PasswordResetPage } from '../password-reset/password-reset';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     LoginPage,
     RegisterPage,
     BusinessApprovalPage,
-    BusinessRegisterPage
+    BusinessRegisterPage,
+    PasswordResetPage
   ],
   imports: [
     IonicPageModule.forChild(ProfilePage),
@@ -27,7 +29,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     LoginPage,
     RegisterPage,
     BusinessApprovalPage,
-    BusinessRegisterPage
+    BusinessRegisterPage,
+    PasswordResetPage
   ]
 })
 export class ProfilePageModule { }

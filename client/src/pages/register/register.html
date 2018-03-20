@@ -1,5 +1,10 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-navbar *ngIf="navParams.get('mode') === 'edit'"
+              color="primary">
+    <ion-title>Editar perfil</ion-title>
+  </ion-navbar>
+  <ion-toolbar *ngIf="navParams.get('mode') === 'new'"
+               color="primary">
     <ion-title>
       Registro de usuario
     </ion-title>
@@ -16,8 +21,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <form [formGroup]="registerForm"
-        (submit)="onSubmitForm()">
+  <form [formGroup]="registerForm">
     <ion-list>
       <ion-list-header>
         Datos personales
@@ -38,11 +42,6 @@
       </ion-item>
       <ion-label *ngIf="(lastName.invalid && (lastName.touched && lastName.dirty))"
                  class="label-error">Los apellidos son obligatorios</ion-label>
-    </ion-list>
-    <ion-list class="second-list">
-      <ion-list-header>
-        Datos de inicio de sesión
-      </ion-list-header>
       <ion-item>
         <ion-input formControlName="email"
                    type="email"
@@ -54,29 +53,60 @@
                  class="label-error">El email no es válido</ion-label>
       <ion-label *ngIf="email.hasError('duplicatedEmail')"
                  class="label-error">El email ya se encuentra en uso</ion-label>
-      <div formGroupName="passwordGroup">
-        <ion-item>
-          <ion-input formControlName="password"
-                     type="password"
-                     placeholder="Contraseña"></ion-input>
-        </ion-item>
-        <ion-label *ngIf="(password.invalid && (password.touched && password.dirty))"
-                   class="label-error">La contraseña es obligatoria</ion-label>
-        <ion-item>
-          <ion-input formControlName="passwordConfirm"
-                     type="password"
-                     placeholder="Repite la contraseña"></ion-input>
-        </ion-item>
-        <ion-label *ngIf="passwordConfirm.invalid && passwordConfirm.dirty && passwordConfirm.touched"
-                   class="label-error">La confirmación de la contraseña es obligatora</ion-label>
-        <ion-label *ngIf="registerForm.get('passwordGroup').hasError('passwordMatch') && passwordConfirm.dirty && passwordConfirm.touched"
-
-                   class="label-error">Las contraseñas no coinciden</ion-label>
-      </div>
     </ion-list>
-    <button ion-button
+    <button *ngIf="navParams.get('mode') === 'edit'"
+            ion-button
             full
             type="submit"
-            [disabled]="registerForm.invalid">Registrarse</button>
+            [disabled]="firstName.invalid || lastName.invalid || email.invalid"
+            (click)="onUpdateUserDetails()">Guardar datos personales</button>
+    <ion-list formGroupName="passwordGroup"
+              class="second-list">
+      <ion-list-header *ngIf="navParams.get('mode') === 'edit'">
+        Cambiar contraseña
+      </ion-list-header>
+      <ion-list-header *ngIf="navParams.get('mode') === 'new'">
+        Contraseña
+      </ion-list-header>
+      <ion-item>
+        <ion-input formControlName="password"
+                   type="password"
+                   [placeholder]="navParams.get('mode') === 'edit' ? 'Contraseña actual' : 'Contraseña'"></ion-input>
+      </ion-item>
+      <ion-label *ngIf="navParams.get('mode') === 'new' && password.invalid && password.touched && password.dirty"
+                 class="label-error">La contraseña es obligatoria</ion-label>
+      <ion-label *ngIf="navParams.get('mode') === 'edit' && password.hasError('required') && password.touched && password.dirty"
+
+                 class="label-error">La contraseña actual es obligatoria</ion-label>
+      <ion-label *ngIf="navParams.get('mode') === 'edit' && password.hasError('oldPasswordDoestNotMatch') && password.touched && password.dirty"
+
+                 class="label-error">La contraseña actual introducida es errónea</ion-label>
+      <ion-item>
+        <ion-input formControlName="passwordConfirm"
+                   type="password"
+                   [placeholder]="navParams.get('mode') === 'edit' ? 'Contraseña nueva' : 'Repite la contraseña'"></ion-input>
+      </ion-item>
+      <ion-label *ngIf="navParams.get('mode') === 'new' && passwordConfirm.invalid && passwordConfirm.dirty && passwordConfirm.touched"
+
+                 class="label-error">La confirmación de la contraseña es obligatoria</ion-label>
+      <ion-label *ngIf="navParams.get('mode') === 'edit' && passwordConfirm.invalid && passwordConfirm.dirty && passwordConfirm.touched"
+
+                 class="label-error">La contraseña nueva es obligatoria</ion-label>
+      <ion-label *ngIf="registerForm.get('passwordGroup').hasError('passwordMatch') && passwordConfirm.dirty && passwordConfirm.touched"
+
+                 class="label-error">Las contraseñas no coinciden</ion-label>
+    </ion-list>
+    <button *ngIf="navParams.get('mode') === 'new'"
+            ion-button
+            full
+            type="submit"
+            [disabled]="registerForm.invalid"
+            (click)="onRegister()">Registrarse</button>
+    <button *ngIf="navParams.get('mode') === 'edit'"
+            ion-button
+            full
+            type="submit"
+            [disabled]="passwordGroup.invalid"
+            (click)="onUpdatePassword()">Cambiar contraseña</button>
   </form>
 </ion-content>

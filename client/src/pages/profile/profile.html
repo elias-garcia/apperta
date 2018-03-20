@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Mi perfil</ion-title>
   </ion-navbar>
 </ion-header>
@@ -32,12 +32,28 @@
     <ion-list-header>
       Menú
     </ion-list-header>
-    <button ion-item
+    <button *ngIf="session && !session.business"
+            ion-item
             detail-push
             (click)="onOpenBusinessRegisterPage()">
       <ion-icon name="home"
                 item-start></ion-icon>
       Registrar negocio
+    </button>
+    <button *ngIf="session && session.business"
+            ion-item
+            detail-push
+            (click)="onOpenBusinessEditPage()">
+      <ion-icon name="home"
+                item-start></ion-icon>
+      Editar negocio
+    </button>
+    <button *ngIf="session && session.business"
+            ion-item
+            detail-push>
+      <ion-icon name="cash"
+                item-start></ion-icon>
+      Promocionar negocio
     </button>
     <button ion-item
             detail-push
@@ -46,7 +62,7 @@
                 item-start></ion-icon>
       Editar perfil
     </button>
-    <button *ngIf="session.role === Role.ADMIN"
+    <button *ngIf="session && session.role === Role.ADMIN"
             ion-item
             detail-push
             (click)="onOpenBusinessApprovalPage()">

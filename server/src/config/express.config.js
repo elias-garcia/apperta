@@ -23,7 +23,7 @@ const configure = (app) => {
   app.set('port', appConfig.port);
 
   /* Use json as body request parser */
-  app.use(express.json());
+  app.use(express.json({ limit: '5mb' }));
 
   /* Accept only Content Type application/json */
   app.use(middleware.acceptJson);
@@ -32,7 +32,13 @@ const configure = (app) => {
   app.use(middleware.setJson);
 
   /* Endpoints that requires authentication */
-  // app.put(`${appConfig.path}/users/:userId`, middleware.auth);
+  app.put(`${appConfig.path}/me`, middleware.auth);
+  app.patch(`${appConfig.path}/me`, middleware.auth);
+  app.delete(`${appConfig.path}/me`, middleware.auth);
+  app.post(`${appConfig.path}/businesses`, middleware.auth);
+  app.put(`${appConfig.path}/businesses`, middleware.auth);
+  app.post(`${appConfig.path}/businesses/:businessId/images`, middleware.auth);
+  app.delete(`${appConfig.path}/businesses/:businessId/images/:imageId`, middleware.auth);
 
   /* Routing configuration */
   app.use(appConfig.path, routes);

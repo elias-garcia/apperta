@@ -1,11 +1,9 @@
-const validator = require('../../util/validator');
 const ApiError = require('../api-error');
 const passwordResetTokenService = require('./password-reset-token.service');
 
 const createPasswordResetToken = async (req, res, next) => {
   try {
-    if (!req.body.email ||
-      !validator.isEmail(req.body.email)) {
+    if (!req.body.email) {
       throw new ApiError(422, 'unprocessable entity');
     }
 

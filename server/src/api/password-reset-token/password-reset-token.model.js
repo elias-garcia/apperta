@@ -14,9 +14,8 @@ const passwordResetTokenSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+  email: {
+    type: String,
     required: true,
   },
 }, { timestamps: false });

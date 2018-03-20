@@ -1,6 +1,7 @@
 const sessionService = require('./session.service');
 const ApiError = require('../api-error');
 const json = require('../../util/json');
+const businessDto = require('../business/business.dto');
 
 const logIn = async (req, res, next) => {
   try {
@@ -9,9 +10,13 @@ const logIn = async (req, res, next) => {
     }
 
     const session = await sessionService.logIn(
-      req.body.email,
+      String(req.body.email).toLowerCase(),
       String(req.body.password),
     );
+
+    if (session.business) {
+      session.business = businessDto.toBusinessDto(session.business);
+    }
 
     return res.status(200).json(json.createData([{ title: 'session', data: session }]));
   } catch (err) {

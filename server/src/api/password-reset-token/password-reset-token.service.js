@@ -15,7 +15,7 @@ const createPasswordResetToken = async (email) => {
     throw new ApiError(404, 'user not found');
   }
 
-  const oldToken = await PasswordResetToken.findOne({ user: user.id });
+  const oldToken = await PasswordResetToken.findOne({ email });
   if (oldToken) {
     await oldToken.remove();
   }
@@ -26,20 +26,20 @@ const createPasswordResetToken = async (email) => {
 
   expirationDate.add(appConfig.passwordResetTokenExpiration, 'seconds');
 
-  const token = await PasswordResetToken.create({
+  await PasswordResetToken.create({
     value: bcrypt.hashSync(newToken),
     issueDate: issueDate.format(),
     expirationDate: expirationDate.format(),
-    user: user.id,
+    email,
   });
 
   scheduler.schedule(
     expirationDate.toDate(),
     jobTypes.PASSWORD_RESET_TOKEN_EXPIRE,
-    { tokenId: token.id, userId: user.id },
+    { email },
   );
 
-  await mailer.sendPasswordResetToken(user.email, user.id, newToken);
+  await mailer.sendPasswordResetToken(email, newToken);
 };
 
 module.exports = {

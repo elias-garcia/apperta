@@ -9,6 +9,7 @@ if (!process.env.NODE_ENV) {
 
 config.express(app);
 config.mongoose();
+config.cloudinary();
 
 app.listen(app.get('port'), () => {
   console.log(`API running on port ${app.get('port')}`);

@@ -23,10 +23,15 @@ export class ProfilePage {
     public navParams: NavParams,
     public modalCtrl: ModalController,
     private securityProvider: SecurityProvider
-  ) {
+  ) { }
+
+  ionViewDidLoad() {
+    this.getSession();
+  }
+
+  getSession() {
     this.securityProvider.getSession().subscribe(
       (session: Session) => {
-        console.log(session);
         this.session = session;
       }
     )
@@ -39,13 +44,13 @@ export class ProfilePage {
   }
 
   onShowRegisterModal() {
-    const modal = this.modalCtrl.create(RegisterPage);
+    const modal = this.modalCtrl.create(RegisterPage, { mode: 'new' });
 
     modal.present();
   }
 
   onOpenEditProfilePage() {
-    this.navCtrl.push(RegisterPage);
+    this.navCtrl.push(RegisterPage, { mode: 'edit' });
   }
 
   onOpenBusinessApprovalPage() {
@@ -53,7 +58,11 @@ export class ProfilePage {
   }
 
   onOpenBusinessRegisterPage() {
-    this.navCtrl.push(BusinessRegisterPage);
+    this.navCtrl.push(BusinessRegisterPage, { mode: 'new', session: this.session });
+  }
+
+  onOpenBusinessEditPage() {
+    this.navCtrl.push(BusinessRegisterPage, { mode: 'edit', session: this.session });
   }
 
   onLogout() {

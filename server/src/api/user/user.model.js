@@ -27,6 +27,12 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: Roles.USER,
   },
+  business: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Business',
+    default: undefined,
+    required: false,
+  },
 }, { timestamps: true });
 
 userSchema.pre('save', function (next) {

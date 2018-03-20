@@ -1,45 +1,126 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Registrar negocio</ion-title>
+  <ion-navbar color="primary">
+    <ion-title *ngIf="this.navParams.get('mode') === 'new'">Registrar negocio</ion-title>
+    <ion-title *ngIf="navParams.get('mode') === 'edit'">Editar negocio</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <form>
+  <form [formGroup]="registerForm">
     <ion-list>
       <ion-list-header>
         Información del local
       </ion-list-header>
-      <ion-item>
+      <ion-item formControlName="name">
         <ion-label fixed>Nombre</ion-label>
         <ion-input type="text"
                    value=""></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-label *ngIf="name.invalid && name.touched && name.dirty"
+                 class="label-error">El nombre es obligatorio</ion-label>
+      <ion-item formControlName="phone">
         <ion-label fixed>Teléfono</ion-label>
-        <ion-input type="number"
+        <ion-input type="tel"
                    value=""></ion-input>
       </ion-item>
+      <ion-label *ngIf="phone.invalid && phone.touched && phone.dirty"
+                 class="label-error">El teléfono es obligatorio</ion-label>
       <ion-item>
-        <ion-input type="text"
+        <ion-label>Tipo de negocio</ion-label>
+        <ion-select interface="popover"
+                    formControlName="type">
+          <ion-option [value]="BusinessType.RESTAURANT">Restaurante</ion-option>
+          <ion-option [value]="BusinessType.COFFEE_SHOP">Cafetería</ion-option>
+          <ion-option [value]="BusinessType.BAR_PUB">Bar/Pub</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-label *ngIf="type.invalid && type.touched && type.dirty"
+                 class="label-error">El tipo es obligatorio</ion-label>
+      <ion-item>
+        <ion-input formControlName="location"
+                   type="text"
                    placeholder="Ubicación"
                    value=""
                    #locationInput></ion-input>
       </ion-item>
+      <ion-label *ngIf="location.hasError('required') && location.touched && location.dirty"
+                 class="label-error">La ubicación es obligatoria</ion-label>
+      <ion-label *ngIf="location.hasError('notValidLocation') && location.touched && location.dirty"
+                 class="label-error">La ubicación no es válida</ion-label>
     </ion-list>
     <ion-list class="second-list">
       <ion-list-header>
         Foto de portada
       </ion-list-header>
       <ion-item class="item-img">
-        <img src="assets/imgs/img-placeholder.png"
+        <img *ngIf="!cover.value"
+             src="assets/imgs/img-placeholder.png"
+             (click)="onOpenFilePicker()">
+        <img *ngIf="cover.value"
+             [src]="cover.value"
              (click)="onOpenFilePicker()">
         <input #coverImageInput
+               hidden="true"
                type="file"
-               src="assets/imgs/img-placeholder.png">
+               accept=".jpg, .jpeg, .png"
+               (change)="onCoverImageInputChange()">
+      </ion-item>
+      <ion-label *ngIf="cover.hasError('required') && cover.touched && cover.dirty"
+                 class="label-error">La foto de portada es obligatoria</ion-label>
+    </ion-list>
+    <ion-list class="second-list">
+      <ion-list-header>
+        Galería de fotos
+      </ion-list-header>
+      <ion-item class="img-gallery">
+        <button ion-button
+                outline
+                (click)="onOpenGalleryPicker()">Seleccionar fotos</button>
+        <input #galleryImageInput
+               multiple
+               hidden="true"
+               type="file"
+               accept=".jpg, .jpeg, .png"
+               (change)="onGalleryImageInputChange()">
+        <ng-container *ngIf="navParams.get('mode') === 'new'">
+          <ion-grid *ngIf="galleryImages.value.length">
+            <ion-row>
+              <ion-col col-4
+                       *ngFor="let galleryImage of galleryImages.value; let i = index">
+                <img [src]="galleryImage"
+                     (click)="onGalleryImageClick(i)">
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ng-container>
+        <ng-container *ngIf="navParams.get('mode') === 'edit'">
+          <ion-grid *ngIf="galleryImages.value.length || tempGalleryImages.length">
+            <ion-row>
+              <ion-col col-4
+                       *ngFor="let galleryImage of galleryImages.value; let i = index">
+                <img [src]="galleryImage.url"
+                     (click)="onGalleryImageClick(i)">
+              </ion-col>
+              <ion-col col-4
+                       *ngFor="let tempGalleryImage of tempGalleryImages; let i = index">
+                <img [src]="tempGalleryImage"
+                     (click)="onTempGalleryImageClick(i)">
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ng-container>
       </ion-item>
     </ion-list>
-    <button ion-button
+    <button *ngIf="navParams.get('mode') === 'new'"
+            ion-button
             full
-            type="submit">Registrar</button>
+            type="submit"
+            [disabled]="registerForm.invalid"
+            (click)="onRegister()">Registrar</button>
+    <button *ngIf="navParams.get('mode') === 'edit'"
+            ion-button
+            full
+            type="submit"
+            [disabled]="registerForm.invalid"
+            (click)="onRegister()">Guardar cambios</button>
   </form>
 </ion-content>

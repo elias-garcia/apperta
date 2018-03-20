@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, ToastController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, ToastController, LoadingController, Events } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { LoginData } from './login-data';
 import { UserProvider } from '../../providers/user.provider';
 import { SecurityProvider } from '../../providers/security.provider';
-import { Session } from '../../shared/models/session.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { validateEmail } from '../../shared/validators/email.validator';
+import { PasswordResetPage } from '../password-reset/password-reset';
 
 @Component({
   selector: 'page-login',
@@ -20,6 +20,7 @@ export class LoginPage {
     public viewCtrl: ViewController,
     public navCtrl: NavController,
     public navParams: NavParams,
+    public events: Events,
     private fb: FormBuilder,
     private userProvider: UserProvider,
     private securityProvider: SecurityProvider,
@@ -30,6 +31,11 @@ export class LoginPage {
       email: ['', [Validators.required, validateEmail]],
       password: ['', Validators.required]
     })
+    this.onPasswordResetSuccessEvent();
+  }
+
+  onPasswordResetSuccessEvent() {
+    this.events.subscribe('password-reset:success', () => this.viewCtrl.dismiss());
   }
 
   onCloseModal() {
@@ -41,34 +47,40 @@ export class LoginPage {
       content: 'Por favor, espere...'
     });
 
-    loading.present();
-
-    const loginData: LoginData = {
-      email: this.email.value,
-      password: this.password.value
-    }
-
-    this.userProvider.login(loginData).subscribe(
-      (res: any) => {
-        this.securityProvider.storeSession(res.session);
-        loading.dismiss();
-        this.viewCtrl.dismiss();
-        this.showMessage(`Bienvenido ${res.session.firstName}!`);
-      }, (err: HttpErrorResponse) => {
-        loading.dismiss();
-        if (err.status === 403) {
-          if (err.error.message.includes('password')) {
-            this.password.setErrors({ 'passwordDoesNotMatch': true });
-          }
-          if (err.error.message.includes('email')) {
-            this.email.setErrors({ 'emailDoesNotExist': true });
-          }
-        } else {
-          this.viewCtrl.dismiss();
-          this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.');
+    loading.present().then(
+      () => {
+        const loginData: LoginData = {
+          email: this.email.value,
+          password: this.password.value
         }
+
+        this.userProvider.login(loginData).subscribe(
+          (res: any) => {
+            this.securityProvider.storeSession(res.session);
+            loading.dismiss();
+            this.navCtrl.pop();
+            this.showMessage(`Bienvenido ${res.session.firstName}!`);
+          }, (err: HttpErrorResponse) => {
+            loading.dismiss();
+            if (err.status === 403) {
+              if (err.error.message.includes('password')) {
+                this.password.setErrors({ 'passwordDoesNotMatch': true });
+              }
+              if (err.error.message.includes('email')) {
+                this.email.setErrors({ 'emailDoesNotExist': true });
+              }
+            } else {
+              this.viewCtrl.dismiss();
+              this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.');
+            }
+          }
+        )
       }
-    )
+    );
+  }
+
+  onOpenResetPasswordPage() {
+    this.navCtrl.push(PasswordResetPage);
   }
 
   showMessage(message: string) {
@@ -76,6 +88,7 @@ export class LoginPage {
       message,
       duration: 3000
     });
+
     toast.present();
   }
 
