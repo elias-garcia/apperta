@@ -67,20 +67,24 @@
       <ion-label *ngIf="cover.hasError('required') && cover.touched && cover.dirty"
                  class="label-error">La foto de portada es obligatoria</ion-label>
     </ion-list>
-    <ion-list class="second-list">
+    <ion-list class="third-list">
       <ion-list-header>
         Galería de fotos
       </ion-list-header>
-      <ion-item class="img-gallery">
-        <button ion-button
-                outline
-                (click)="onOpenGalleryPicker()">Seleccionar fotos</button>
+      <div class="upload-images-button-wrapper">
         <input #galleryImageInput
                multiple
                hidden="true"
                type="file"
                accept=".jpg, .jpeg, .png"
                (change)="onGalleryImageInputChange()">
+        <button class="upload-images-button"
+                ion-button
+                outline
+                (click)="onOpenGalleryPicker()">Subir fotos</button>
+      </div>
+      <ion-item class="img-gallery"
+                *ngIf="galleryImages.value.length || tempGalleryImages.length">
         <ng-container *ngIf="navParams.get('mode') === 'new'">
           <ion-grid *ngIf="galleryImages.value.length">
             <ion-row>
@@ -122,5 +126,11 @@
             type="submit"
             [disabled]="registerForm.invalid"
             (click)="onRegister()">Guardar cambios</button>
+    <button *ngIf="navParams.get('mode') === 'edit'"
+            ion-button
+            full
+            clear
+            color="danger"
+            (click)="onDeleteBusiness()">Eliminar</button>
   </form>
 </ion-content>

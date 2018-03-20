@@ -1,25 +1,46 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { BusinessProvider } from '../../providers/business.provider';
+import { BusinessStatus } from '../../shared/models/business-status.enum';
+import { Business } from '../../shared/models/business.model';
+import { BussinessHomePage } from '../bussiness-home/bussiness-home';
 
-/**
- * Generated class for the BusinessApprovalPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
   selector: 'page-business-approval',
   templateUrl: 'business-approval.html',
 })
 export class BusinessApprovalPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public businesses: Business[];
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public loadingCtrl: LoadingController,
+    private businessProvider: BusinessProvider
+  ) { }
+
+  ionViewWillEnter() {
+    this.getBusinesses();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad BusinessApprovalPage');
+  getBusinesses() {
+    const loading = this.loadingCtrl.create({
+      content: 'Cargando...'
+    });
+
+    loading.present().then(() => {
+      this.businessProvider.getBusinesses(BusinessStatus.PENDING).subscribe(
+        (res: any) => {
+          this.businesses = res.businesses;
+          loading.dismiss();
+        }
+      );
+    })
+  }
+
+  onOpenBusinessPage(business: Business) {
+    this.navCtrl.push(BussinessHomePage, { mode: 'edit', business });
   }
 
 }

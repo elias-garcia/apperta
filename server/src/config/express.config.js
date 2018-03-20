@@ -36,9 +36,12 @@ const configure = (app) => {
   app.patch(`${appConfig.path}/me`, middleware.auth);
   app.delete(`${appConfig.path}/me`, middleware.auth);
   app.post(`${appConfig.path}/businesses`, middleware.auth);
-  app.put(`${appConfig.path}/businesses`, middleware.auth);
+  app.put(`${appConfig.path}/businesses/:id`, middleware.auth);
+  app.patch(`${appConfig.path}/businesses/:id`, middleware.auth);
+  app.delete(`${appConfig.path}/businesses/:id`, middleware.auth);
   app.post(`${appConfig.path}/businesses/:businessId/images`, middleware.auth);
   app.delete(`${appConfig.path}/businesses/:businessId/images/:imageId`, middleware.auth);
+  app.post(`${appConfig.path}/businesses/:id/ratings`, middleware.auth);
 
   /* Routing configuration */
   app.use(appConfig.path, routes);

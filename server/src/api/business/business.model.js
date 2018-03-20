@@ -33,6 +33,7 @@ const businessSchema = new mongoose.Schema({
   },
   location: {
     type: { type: String, default: 'Point', required: true },
+    address: { type: String, required: true },
     coordinates: { type: [Number], required: true },
   },
   type: {

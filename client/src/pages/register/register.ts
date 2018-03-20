@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, LoadingController, ToastController, Loading } from 'ionic-angular';
+import { NavController, NavParams, ViewController, LoadingController, ToastController, Loading, Toast } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { validateEmail } from '../../shared/validators/email.validator';
 import { validatePasswordMatch } from '../../shared/validators/password-match.validator';
@@ -170,10 +170,13 @@ export class RegisterPage {
   }
 
   showMessage(message: string) {
-    let toast = this.toastCtrl.create({
+    const toast: Toast = this.toastCtrl.create({
+      showCloseButton: true,
+      closeButtonText: 'Ok',
       message,
       duration: 3000
     });
+
     toast.present();
   }
 

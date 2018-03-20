@@ -15,7 +15,7 @@ const logIn = async (email, password) => {
   }
 
   const token = jwt.sign(
-    { sub: user.id },
+    { sub: user.id, role: user.role },
     appConfig.jwtSecret,
     { expiresIn: appConfig.jwtMaxAge },
   );

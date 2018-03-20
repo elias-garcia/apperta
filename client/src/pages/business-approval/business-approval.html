@@ -1,12 +1,26 @@
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>businessApprovalPage</ion-title>
+    <ion-title>Negocios pendientes</ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
-<ion-content padding>
-
+<ion-content no-padding>
+  <ion-list-header *ngIf="businesses && businesses.length">
+    Lista de negocios pendientes
+  </ion-list-header>
+  <ion-list *ngIf="businesses && businesses.length">
+    <ion-item *ngFor="let business of businesses"
+              (click)="onOpenBusinessPage(business)">
+      <ion-avatar item-start>
+        <img [src]="business.cover.url">
+      </ion-avatar>
+      <h2>{{ business.name }}</h2>
+      <h3>{{ business.owner.firstName }} {{ business.owner.lastName }}</h3>
+      <p>{{ business.owner.email }}</p>
+    </ion-item>
+  </ion-list>
+  <p padding
+     text-center
+     *ngIf="businesses && !businesses.length">
+    No tienes negocios pendientes de aprobación
+  </p>
 </ion-content>

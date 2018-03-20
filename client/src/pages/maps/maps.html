@@ -1,8 +1,7 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>La Malquerida</ion-title>
+    <ion-title *ngIf="this.navParams.get('name')">{{ this.navParams.get('name') }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 <ion-content>
   <div #mapContainer

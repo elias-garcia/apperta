@@ -1,7 +1,16 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>Fotos</ion-title>
+    <ion-title *ngIf="this.navParams.get('name')">{{ this.navParams.get('name') }}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
+  <ion-grid *ngIf="this.navParams.get('images')">
+    <ion-row>
+      <ion-col col-4
+               *ngFor="let image of this.navParams.get('images')">
+        <img [src]="image.url"
+             (click)="onViewImage(image)">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -8,7 +8,11 @@ page-business-register {
     padding-left: 0;
   }
 
-  .button {
+  .third-list.list-ios {
+    border-bottom: 0.55px solid #c8c7cc;
+  }
+
+  .button-default {
     margin-top: 32px;
   }
 
@@ -29,6 +33,20 @@ page-business-register {
     }
   }
 
+  .upload-images-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .button-outline-ios.upload-images-button {
+    margin: 11px auto;
+  }
+
+  .button-outline-md.upload-images-button {
+    margin: 13px auto;
+  }
+
   .img-gallery {
     .item-inner {
       padding-right: 0 !important;
@@ -40,10 +58,12 @@ page-business-register {
       display: flex;
       flex-direction: column;
     }
-    button {
-      margin: 0 auto;
+    .grid {
+      padding: 0;
     }
     .col {
+      padding-top: 0;
+      padding-bottom: 0;
       img {
         height: 100px;
         width: 100%;

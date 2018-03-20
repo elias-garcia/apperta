@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { RatingStats } from "../../models/rating-stats.model";
 
 @Component({
   selector: 'average-rating',
@@ -6,28 +7,8 @@ import { Component, Input } from "@angular/core";
 })
 export class AverageRatingComponent {
 
-  @Input() public totalRatings = 32;
-  @Input() public scoreStats = [
-    {
-      score: 1,
-      count: 5
-    },
-    {
-      score: 2,
-      count: 18
-    },
-    {
-      score: 3,
-      count: 8
-    },
-    {
-      score: 4,
-      count: 0
-    },
-    {
-      score: 5,
-      count: 1
-    }
-  ]
+  @Input() ratingStats: RatingStats;
+
+  public isNaN: Function = Number.isNaN;
 
 }

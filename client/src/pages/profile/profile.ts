@@ -25,7 +25,7 @@ export class ProfilePage {
     private securityProvider: SecurityProvider
   ) { }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.getSession();
   }
 

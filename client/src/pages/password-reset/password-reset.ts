@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, LoadingController, ToastController, Events } from 'ionic-angular';
+import { NavController, NavParams, ViewController, LoadingController, ToastController, Events, Toast } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { validateEmail } from '../../shared/validators/email.validator';
 import { UserProvider } from '../../providers/user.provider';
@@ -113,7 +113,9 @@ export class PasswordResetPage {
   }
 
   showMessage(message: string) {
-    let toast = this.toastCtrl.create({
+    const toast: Toast = this.toastCtrl.create({
+      showCloseButton: true,
+      closeButtonText: 'Ok',
       message,
       duration: 3000
     });

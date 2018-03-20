@@ -1,5 +1,5 @@
 import { Component, ViewChild, Renderer2, ElementRef } from '@angular/core';
-import { NavController, NavParams, Content, AlertController, ActionSheetController, LoadingController, Loading, ToastController } from 'ionic-angular';
+import { NavController, NavParams, Content, AlertController, ActionSheetController, LoadingController, Loading, ToastController, ModalController, Alert, Toast } from 'ionic-angular';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { BusinessType } from '../../shared/models/business-type.enum';
@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import 'rxjs/add/operator/map'
 import { GeolocationProvider } from '../../providers/geolocation.provider';
+import { SingleImagePage } from '../../shared/pages/single-image/single-image';
 
 const MAX_FILE_SIZE = 4194304;
 
@@ -36,6 +37,7 @@ export class BusinessRegisterPage {
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public actionSheetCtrl: ActionSheetController,
+    public modalCtrl: ModalController,
     private fb: FormBuilder,
     private geolocation: Geolocation,
     private renderer: Renderer2,
@@ -233,6 +235,18 @@ export class BusinessRegisterPage {
           }
         },
         {
+          text: 'Ver',
+          handler: () => {
+            const image = this.galleryImages.value.filter((elem, i) => i === index)[0];
+
+            if (this.navParams.get('mode') === 'edit') {
+              this.viewImage(image.url);
+            } else {
+              this.viewImage(image);
+            }
+          }
+        },
+        {
           text: 'Cancelar',
           role: 'cancel',
         }
@@ -253,6 +267,14 @@ export class BusinessRegisterPage {
           }
         },
         {
+          text: 'Ver',
+          handler: () => {
+            const image = this.tempGalleryImages.filter((elem, i) => i === index)[0];
+
+            this.viewImage(image);
+          }
+        },
+        {
           text: 'Cancelar',
           role: 'cancel',
         }
@@ -260,6 +282,12 @@ export class BusinessRegisterPage {
     });
 
     actionSheet.present();
+  }
+
+  viewImage(src: string) {
+    const imageModal = this.modalCtrl.create(SingleImagePage, { src });
+
+    imageModal.present();
   }
 
   filesExceedsMaxSizes(arr: File[]) {
@@ -289,7 +317,10 @@ export class BusinessRegisterPage {
               name: this.name.value,
               phone: this.phone.value,
               type: this.type.value,
-              location: [results[0].geometry.location.lat(), results[0].geometry.location.lng()],
+              location: {
+                address: this.location.value,
+                coordinates: [results[0].geometry.location.lat(), results[0].geometry.location.lng()]
+              },
               cover: this.cover.value
             };
 
@@ -356,11 +387,53 @@ export class BusinessRegisterPage {
     });
   }
 
+  onDeleteBusiness() {
+    const confirm: Alert = this.alertCtrl.create({
+      title: '¿Desea eliminar el negocio?',
+      message: 'La decisión tomada no puede ser revertida!',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => { }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            const loading = this.loadingCtrl.create({
+              content: 'Por favor, espere...'
+            });
+
+            loading.present().then(() => {
+              this.businessProvider.deleteBusiness(this.session.business.id).subscribe(
+                (res: any) => {
+                  this.session.business = undefined;
+                  this.securityProvider.storeSession(this.session);
+                  loading.dismiss();
+                  this.navCtrl.pop();
+                  this.showMessage('El negocio ha sido eliminado con éxito');
+                },
+                (err: HttpErrorResponse) => {
+                  loading.dismiss();
+                }
+              );
+            });
+          }
+        }
+      ]
+    });
+
+    confirm.present();
+  }
+
   showMessage(message: string) {
-    let toast = this.toastCtrl.create({
+    const toast: Toast = this.toastCtrl.create({
       message,
+      showCloseButton: true,
+      closeButtonText: 'Ok',
       duration: 3000
     });
+
     toast.present();
   }
 

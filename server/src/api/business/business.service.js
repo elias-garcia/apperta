@@ -16,7 +16,8 @@ const create = async (ownerId, name, phone, type, location, cover) => {
     phone,
     type,
     location: {
-      coordinates: location,
+      address: location.address,
+      coordinates: location.coordinates,
     },
   });
 
@@ -36,13 +37,18 @@ const create = async (ownerId, name, phone, type, location, cover) => {
   return business;
 };
 
-const update = async (id, name, phone, type, location, cover) => {
-  let business = await Business.findById(id);
+const update = async (userId, businessId, name, phone, type, location, cover) => {
+  let business = await Business.findById(businessId);
+
+  if (business.owner.toString() !== userId) {
+    throw new ApiError(403, 'forbidden');
+  }
 
   business.name = name;
   business.phone = phone;
   business.type = type;
-  business.location.coordinates = location;
+  business.location.address = location.address;
+  business.location.coordinates = location.coordinates;
 
   if (!cover.includes('cloudinary')) {
     await cloudinary.uploader.upload(cover, async (result) => {
@@ -59,8 +65,48 @@ const update = async (id, name, phone, type, location, cover) => {
   return business;
 };
 
-const addImage = async (businessId, image) => {
+const findAll = async (status) => {
+  const query = Business.find({});
+
+  if (status) {
+    query.where({ status });
+  }
+
+  const businesses = await query.populate('owner', '-password');
+
+  return businesses;
+};
+
+const changeStatus = async (userId, businessId, status) => {
   let business = await Business.findById(businessId);
+
+  business.status = status;
+  business = await business.save();
+
+  return business;
+};
+
+const remove = async (userId, businessId) => {
+  const business = await Business.findById(businessId);
+
+  if (business.owner.toString() !== userId) {
+    throw new ApiError(403, 'forbidden');
+  }
+
+  const user = await User.findById(userId);
+
+  user.business = undefined;
+  await user.save();
+  await business.remove();
+};
+
+const addImage = async (userId, businessId, image) => {
+  let business = await Business.findById(businessId);
+
+  if (business.owner.toString() !== userId) {
+    throw new ApiError(403, 'forbidden');
+  }
+
   let tempImage = {};
 
   await cloudinary.uploader.upload(image, async (result) => {
@@ -78,8 +124,13 @@ const addImage = async (businessId, image) => {
   return business.images.filter(img => img.publicId === tempImage.publicId)[0];
 };
 
-const removeImage = async (businessId, imageId) => {
+const removeImage = async (userId, businessId, imageId) => {
   const business = await Business.findById(businessId);
+
+  if (business.owner.toString() !== userId) {
+    throw new ApiError(403, 'forbidden');
+  }
+
   const imageToRemove = business.images.filter(image => image.id.toString() === imageId)[0];
 
   await cloudinary.uploader.destroy(imageToRemove.publicId, async () => {
@@ -91,6 +142,9 @@ const removeImage = async (businessId, imageId) => {
 module.exports = {
   create,
   update,
+  findAll,
+  changeStatus,
+  remove,
   addImage,
   removeImage,
 };

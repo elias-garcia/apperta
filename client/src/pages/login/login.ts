@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, ToastController, LoadingController, Events } from 'ionic-angular';
+import { NavController, NavParams, ViewController, ToastController, LoadingController, Events, Toast } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { LoginData } from './login-data';
 import { UserProvider } from '../../providers/user.provider';
@@ -84,8 +84,10 @@ export class LoginPage {
   }
 
   showMessage(message: string) {
-    let toast = this.toastCtrl.create({
+    const toast: Toast = this.toastCtrl.create({
       message,
+      showCloseButton: true,
+      closeButtonText: 'Ok',
       duration: 3000
     });
 

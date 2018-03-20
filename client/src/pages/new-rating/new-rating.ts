@@ -1,16 +1,17 @@
 import { NavController, NavParams } from 'ionic-angular';
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { RatingData } from './rating-data';
+import { Business } from '../../shared/models/business.model';
+import { BusinessProvider } from '../../providers/business.provider';
 
 @Component({
   selector: 'page-new-rating',
   templateUrl: 'new-rating.html',
 })
 export class NewRatingPage {
-
-  @Output() public submitRating = new EventEmitter<any>();
-
   public ratingForm: FormGroup;
+  public business: Business;
   public ratingStars = [
     { value: 1, hover: false },
     { value: 2, hover: false },
@@ -22,16 +23,18 @@ export class NewRatingPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private fb: FormBuilder
-  ) { }
-
-  ionViewDidLoad() {
+    private fb: FormBuilder,
+    private businessProvider: BusinessProvider
+  ) {
     this.createForm();
+    this.business = this.navParams.get('business');
   }
 
   createForm() {
     this.ratingForm = this.fb.group({
-      score: ['', Validators.required]
+      score: ['', Validators.required],
+      title: ['', Validators.required],
+      comment: ['', Validators.required]
     });
   }
 
@@ -50,16 +53,31 @@ export class NewRatingPage {
     this.score.patchValue(value);
   }
 
-  onSubmit() {
-    const ratingData = {
-      score: this.score.value
+  onSubmitRating() {
+    const ratingData: RatingData = {
+      score: this.score.value,
+      title: this.title.value,
+      comment: this.comment.value
     };
 
-    this.submitRating.emit(ratingData);
+    this.businessProvider.submitRating(this.business.id, ratingData)
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+        }
+      )
   }
 
   get score(): AbstractControl {
     return this.ratingForm.get('score');
+  }
+
+  get title(): AbstractControl {
+    return this.ratingForm.get('title');
+  }
+
+  get comment(): AbstractControl {
+    return this.ratingForm.get('comment');
   }
 
 }

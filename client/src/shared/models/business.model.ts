@@ -9,12 +9,13 @@ interface Image {
 
 export interface Business {
   id: string;
-  owner: string;
+  owner: any;
   name: string;
   phone: number;
   type: BusinessType;
   location: {
     type: string,
+    address: string,
     coordinates: [number, number]
   };
   isPromoted: boolean;

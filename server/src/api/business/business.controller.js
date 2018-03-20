@@ -1,4 +1,6 @@
 const ApiError = require('../api-error');
+const BusinessStatus = require('./business-status.enum');
+const Roles = require('../user/roles.enum');
 const businessService = require('./business.service');
 const json = require('../../util/json');
 const businessDto = require('./business.dto');
@@ -9,6 +11,8 @@ const create = async (req, res, next) => {
       || !req.body.phone
       || !req.body.type
       || !req.body.location
+      || !req.body.location.address
+      || !req.body.location.coordinates
       || !req.body.cover) {
       throw new ApiError(422, 'unprocessable entity');
     }
@@ -35,11 +39,14 @@ const update = async (req, res, next) => {
       || !req.body.phone
       || !req.body.type
       || !req.body.location
+      || !req.body.location.address
+      || !req.body.location.coordinates
       || !req.body.cover) {
       throw new ApiError(422, 'unprocessable entity');
     }
 
     const business = await businessService.update(
+      req.user.sub,
       req.params.id,
       req.body.name,
       req.body.phone,
@@ -54,6 +61,54 @@ const update = async (req, res, next) => {
   }
 };
 
+const findAll = async (req, res, next) => {
+  try {
+    if (!req.query.status
+      || !Object.keys(BusinessStatus).includes(req.query.status)) {
+      throw new ApiError(422, 'unprocessable entity');
+    }
+    const businesses = await businessService.findAll(req.query.status);
+
+    return res.json(json.createData([{ title: 'businesses', data: businessDto.toBusinessesDto(businesses) }]));
+  } catch (err) {
+    return next(err);
+  }
+};
+
+const changeStatus = async (req, res, next) => {
+  try {
+    if (!req.params.id
+      || !Object.keys(BusinessStatus).includes(req.body.status)) {
+      throw new ApiError(422, 'unprocessable entity');
+    }
+
+    if (req.user.role !== Roles.ADMIN) {
+      throw new ApiError(403, 'forbidden');
+    }
+
+    const business =
+      await businessService.changeStatus(req.user.sub, req.params.id, req.body.status);
+
+    return res.json(json.createData([{ title: 'businesses', data: businessDto.toBusinessDto(business) }]));
+  } catch (err) {
+    return next(err);
+  }
+};
+
+const remove = async (req, res, next) => {
+  try {
+    if (!req.params.id) {
+      throw new ApiError(422, 'unprocessable entity');
+    }
+
+    await businessService.remove(req.user.sub, req.params.id);
+
+    return res.status(204).end();
+  } catch (err) {
+    return next(err);
+  }
+};
+
 const addImage = async (req, res, next) => {
   try {
     if (!req.params.id
@@ -61,7 +116,7 @@ const addImage = async (req, res, next) => {
       throw new ApiError(422, 'unprocessable entity');
     }
 
-    const image = await businessService.addImage(req.params.id, req.body.image);
+    const image = await businessService.addImage(req.user.sub, req.params.id, req.body.image);
 
     return res.json(json.createData([{ title: 'image', data: businessDto.toImageDto(image) }]));
   } catch (err) {
@@ -76,7 +131,7 @@ const removeImage = async (req, res, next) => {
       throw new ApiError(422, 'unprocessable entity');
     }
 
-    await businessService.removeImage(req.params.businessId, req.params.imageId);
+    await businessService.removeImage(req.user.sub, req.params.businessId, req.params.imageId);
 
     return res.status(204).end();
   } catch (err) {
@@ -87,6 +142,9 @@ const removeImage = async (req, res, next) => {
 module.exports = {
   create,
   update,
+  findAll,
+  changeStatus,
+  remove,
   addImage,
   removeImage,
 };

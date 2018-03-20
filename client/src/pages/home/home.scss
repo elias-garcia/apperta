@@ -12,6 +12,11 @@ page-home {
   .card {
     margin: 0;
     width: 100%;
+    margin-bottom: 16px;
+    img {
+      height: 200px;
+      object-fit: cover;
+    }
   }
 
   .title, .avg-rating {
@@ -43,6 +48,7 @@ page-home {
 
   ion-fab[center] {
     margin-left: -50px;
+    bottom: 16px;
     button.fab {
       width: 100px;
       height: 40px;

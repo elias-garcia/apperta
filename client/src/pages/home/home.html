@@ -10,24 +10,28 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <ion-card (click)="onCardClick()">
-    <img src="assets/imgs/restaurant.jpeg" />
-    <ion-card-content>
-      <div class="title">
-        <ion-card-title>
-          La Malquerida
-        </ion-card-title>
-        <div class="avg-rating">
-          <h2>4,5/10</h2>
-          <ion-icon name="star"
-                    class="star-icon"></ion-icon>
-        </div>
-      </div>
-      <ion-icon name="compass"
-                class="compass-icon"></ion-icon>
-      <p>Avenida da Mariña 56, 36600, Vilagarcía de Arousa, España</p>
-    </ion-card-content>
-  </ion-card>
+  <ng-container *ngIf="businesses">
+    <ng-container *ngFor="let business of businesses">
+      <ion-card (click)="onCardClick(business)">
+        <img [src]="business.cover.url" />
+        <ion-card-content>
+          <div class="title">
+            <ion-card-title>
+              {{ business.name }}
+            </ion-card-title>
+            <div class="avg-rating">
+              <h2>4,5/10</h2>
+              <ion-icon name="star"
+                        class="star-icon"></ion-icon>
+            </div>
+          </div>
+          <ion-icon name="compass"
+                    class="compass-icon"></ion-icon>
+          <p>{{ business.location.address }}</p>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+  </ng-container>
   <ion-fab center
            bottom>
     <button ion-fab

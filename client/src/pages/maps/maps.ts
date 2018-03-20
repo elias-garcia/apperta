@@ -18,11 +18,11 @@ export class MapsPage {
 
 
   ionViewDidLoad() {
-    this.loadMap();
+    this.loadMap(this.navParams.get('coordinates'));
   }
 
-  loadMap() {
-    const latLng = new google.maps.LatLng(-34.9290, 138.6010);
+  loadMap(coordinates: [number, number]) {
+    const latLng = new google.maps.LatLng(coordinates[0], coordinates[1]);
     const mapOptions = {
       center: latLng,
       zoom: 15,

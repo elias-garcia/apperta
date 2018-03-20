@@ -1,104 +1,116 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>La Malquerida</ion-title>
+    <ion-title>{{ business?.name }}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <img src="assets/imgs/restaurant.jpeg"
-       class="img-header"
-       width="100%" />
-  <ion-list>
-    <ion-list-header>
-      Acerca de
-    </ion-list-header>
-    <button ion-item
-            detail-push
-            text-wrap
-            (click)=onOpenMapsPage()>
-      <ion-icon name="navigate"
-                item-start></ion-icon>
-      Rúa Santa Teresa 1, 15002, A Coruña España
-    </button>
-    <a href="tel:699239918"
-       ion-item>
-      <ion-icon name="call"
-                item-start></ion-icon>
-      +34 699 23 99 18
-    </a>
-  </ion-list>
-  <ion-list>
-    <ion-list-header>
-      Fotos
-    </ion-list-header>
-    <ion-item>
-      <ion-slides slidesPerView="3"
-                  spaceBetween="10">
-        <ion-slide>
-          <img src="assets/imgs/restaurant.jpeg"
-               (click)="onViewPhoto()" />
-        </ion-slide>
-        <ion-slide>
-          <img src="assets/imgs/photo1.jpg" />
-        </ion-slide>
-        <ion-slide>
-          <img src="assets/imgs/photo2.jpg" />
-        </ion-slide>
-        <ion-slide>
-          <img src="assets/imgs/restaurant.jpeg" />
-        </ion-slide>
-        <ion-slide>
-          <img src="assets/imgs/restaurant.jpeg" />
-        </ion-slide>
-        <ion-slide>
-          <div class="view-more-button">
-            <button ion-button
-                    outline
-                    (click)="onViewAllPhotos()">Ver todas</button>
-          </div>
-        </ion-slide>
-      </ion-slides>
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-list-header>
-      Opiniones
-    </ion-list-header>
-    <ion-item>
-      <average-rating></average-rating>
-    </ion-item>
-    <button ion-item
-            detail-push
-            text-wrap
-            (click)="onOpenNewRatingPage()">
-      <ion-icon name="create"
-                item-start></ion-icon>
-      Escribir una opinión
-    </button>
-    <ion-item class="rating">
-      <div>
-        <ion-avatar item-start>
-          <img src="assets/imgs/restaurant.jpeg" />
-        </ion-avatar>
-      </div>
-      <div>
-        <h2 class="rating-title">Restaurante totalmente recomendado para unas cañitas</h2>
-        <div class="rating-subtitle">
+  <ng-container *ngIf="business">
+    <img [src]="business.cover.url"
+         class="img-header"
+         width="100%" />
+    <ion-list>
+      <ion-list-header>
+        Acerca de
+      </ion-list-header>
+      <button ion-item
+              detail-push
+              text-wrap
+              (click)=onOpenMapsPage()>
+        <ion-icon name="navigate"
+                  item-start></ion-icon>
+        {{ business.location.address }}
+      </button>
+      <a [href]="'tel:' + business.phone"
+         ion-item>
+        <ion-icon name="call"
+                  item-start></ion-icon>
+        {{ business.phone }}
+      </a>
+    </ion-list>
+    <ion-list>
+      <ion-list-header>
+        Fotos
+      </ion-list-header>
+      <ion-item class="images-item">
+        <ion-slides *ngIf="business.images.length"
+                    slidesPerView="3"
+                    spaceBetween="10">
+          <ion-slide *ngFor="let image of business.images.slice(0, 6)">
+            <img [src]="image.url"
+                 (click)="onViewPhoto(image)" />
+          </ion-slide>
+          <ion-slide>
+            <div class="view-more-button">
+              <button ion-button
+                      outline
+                      (click)="onViewAllPhotos()">Ver todas</button>
+            </div>
+          </ion-slide>
+        </ion-slides>
+        <p *ngIf="!business.images.length">
+          El propietario todavía no ha añadido ninguna foto
+        </p>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="navParams.get('mode') === 'view' && ratings && ratingStats">
+      <ion-list-header>
+        Opiniones
+      </ion-list-header>
+      <ion-item>
+        <average-rating [ratingStats]="ratingStats"></average-rating>
+      </ion-item>
+      <ng-container *ngIf="ratings.length">
+        <ion-item class="rating"
+                  *ngFor="let rating of ratings">
           <div>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
+            <ion-avatar item-start>
+              <img src="assets/imgs/restaurant.jpeg" />
+            </ion-avatar>
           </div>
-          <p>28 Mar. 2018</p>
-        </div>
-        <p class="rating-details">aisdajsdojasdoasnflfshdfa ahisfd lbhfds hdflas ldbfhl asbdlhf sadhlbflabhsldbhsl hafbl </p>
-      </div>
-    </ion-item>
-    <button ion-item
-            detail-push
-            text-wrap>
-      Ver todas las opiniones
-    </button>
-  </ion-list>
+          <div>
+            <h2 class="rating-title">{{ rating.title}}</h2>
+            <div class="rating-subtitle">
+              <div>
+                <ion-icon *ngFor="let score of Array(rating.score)"
+                          name="star"></ion-icon>
+              </div>
+              <p>28 Mar. 2018</p>
+            </div>
+            <p class="rating-details">{{ rating.comment }}</p>
+          </div>
+        </ion-item>
+      </ng-container>
+      <ion-item *ngIf="!ratings.length"
+                class="empty-ratings-item">
+        <p text-center>Este negocio aún no tiene opiniones</p>
+      </ion-item>
+      <button *ngIf="(session && !session.business) || (session && session.business && session.business.id !== business.id)"
+              ion-item
+              detail-push
+              text-wrap
+              (click)="onOpenNewRatingPage()">
+        <ion-icon name="create"
+                  item-start></ion-icon>
+        Escribir una opinión
+      </button>
+      <button ion-item
+              detail-push
+              text-wrap>
+        <ion-icon name="eye"
+                  item-start></ion-icon>
+        Ver todas las opiniones
+      </button>
+    </ion-list>
+    <div *ngIf="navParams.get('mode') === 'edit'"
+         padding>
+      <button ion-button
+              full
+              (click)="onShowConfirm(BusinessStatus.APPROVED)">Aprobar</button>
+      <button ion-button
+              full
+              clear
+              color="danger"
+              (click)="onShowConfirm(BusinessStatus.REJECTED)">Rechazar</button>
+    </div>
+  </ng-container>
 </ion-content>

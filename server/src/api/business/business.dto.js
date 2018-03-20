@@ -1,5 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 const dto = require('../../util/dto');
+const userDto = require('../user/user.dto');
 
 const toBusinessDto = (doc) => {
   const ret = dto.transform(doc);
@@ -13,7 +14,13 @@ const toBusinessDto = (doc) => {
   return ret;
 };
 
-const toBusinessesDto = docs => docs.map(doc => toBusinessDto(doc));
+const toBusinessesDto = docs => docs.map((doc) => {
+  const ret = toBusinessDto(doc);
+
+  ret.owner = userDto.toUserDto(ret.owner);
+
+  return ret;
+});
 
 const toImageDto = (doc) => {
   const ret = Object.assign({}, doc.toObject());

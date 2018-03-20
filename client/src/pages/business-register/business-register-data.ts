@@ -4,6 +4,9 @@ export interface BusinessRegisterData {
   name: string;
   phone: string;
   type: BusinessType;
-  location: [number, number];
+  location: {
+    address: string,
+    coordinates: [number, number]
+  };
   cover: string;
 }
