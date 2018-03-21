@@ -10,9 +10,10 @@ import { Session } from '../../shared/models/session.model';
 import { SecurityProvider } from '../../providers/security.provider';
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs/observable/forkJoin';
-import 'rxjs/add/operator/map'
 import { GeolocationProvider } from '../../providers/geolocation.provider';
 import { SingleImagePage } from '../../shared/pages/single-image/single-image';
+import { Business } from '../../shared/models/business.model';
+import 'rxjs/add/operator/map'
 
 const MAX_FILE_SIZE = 4194304;
 
@@ -30,6 +31,7 @@ export class BusinessRegisterPage {
   public BusinessType = BusinessType;
   public registerForm: FormGroup;
   public session: Session;
+  public business: Business;
   public tempGalleryImages: string[] = [];
 
   constructor(
@@ -53,15 +55,18 @@ export class BusinessRegisterPage {
   ionViewDidLoad() {
     this.initAutocomplete();
 
-    this.session = this.navParams.get('session');
-
     if (this.navParams.get('mode') === 'edit') {
       const loading = this.loadingCtrl.create({
         content: 'Cargando...'
       });
 
       loading.present().then(() => {
-        this.patchFormValues(loading);
+        this.securityProvider.getSession().subscribe(
+          (session: Session) => {
+            this.session = session;
+            this.getBusiness(session.business, loading);
+          }
+        );
       });
     }
   }
@@ -77,26 +82,26 @@ export class BusinessRegisterPage {
     });
   }
 
-  patchFormValues(loading: Loading) {
-    this.geolocationProvider.reverseGeocode(
-      this.session.business.location.coordinates[0],
-      this.session.business.location.coordinates[1]
-    ).subscribe(
-      (results: google.maps.GeocoderResult[]) => {
-        this.registerForm.patchValue({
-          name: this.session.business.name,
-          phone: this.session.business.phone,
-          type: this.session.business.type,
-          location: results[0].formatted_address,
-          cover: this.session.business.cover.url,
-          galleryImages: this.session.business.images
-        });
-        loading.dismiss();
-      },
-      (error: any) => {
-        loading.dismiss();
+  getBusiness(businessId: string, loading: Loading) {
+    this.businessProvider.getBusiness(businessId).subscribe(
+      (res: any) => {
+        this.business = res.business;
+        this.patchFormValues(loading);
       }
     );
+  }
+
+  patchFormValues(loading: Loading) {
+    this.registerForm.patchValue({
+      name: this.business.name,
+      phone: this.business.phone,
+      type: this.business.type,
+      location: this.business.location.address,
+      cover: this.business.cover.url,
+      galleryImages: this.business.images
+    });
+
+    loading.dismiss();
   }
 
   initAutocomplete() {
@@ -218,12 +223,11 @@ export class BusinessRegisterPage {
               loading.present().then(() => {
                 const image = this.galleryImages.value.filter((image, i) => i === index)[0];
 
-                this.businessProvider.removeImageFromBusiness(this.session.business.id, image.id)
+                this.businessProvider.removeImageFromBusiness(this.business.id, image.id)
                   .subscribe(
                     (res: any) => {
                       this.galleryImages.patchValue(this.removeFromArrayByIndex(index, this.galleryImages.value));
-                      this.session.business.images = this.removeFromArrayByIndex(index, this.session.business.images);
-                      this.securityProvider.storeSession(this.session);
+                      this.business.images = this.removeFromArrayByIndex(index, this.business.images);
                       loading.dismiss();
                       this.showMessage('La imagen ha sido eliminada con éxito.');
                     }
@@ -327,7 +331,7 @@ export class BusinessRegisterPage {
             let httpCall$: Observable<Object>;
 
             if (this.navParams.get('mode') === 'edit') {
-              httpCall$ = this.businessProvider.editBusiness(this.session.business.id, registerData);
+              httpCall$ = this.businessProvider.editBusiness(this.business.id, registerData);
             } else {
               httpCall$ = this.businessProvider.registerBusiness(registerData);
             }
@@ -355,16 +359,16 @@ export class BusinessRegisterPage {
                     .subscribe(
                       (images: any[]) => {
                         tempBusiness.images.push(...images);
-                        this.session.business = tempBusiness;
-                        this.securityProvider.storeSession(this.session);
+                        this.business = tempBusiness;
+                        this.session.business = this.business.id;
                         loading.dismiss();
                         this.navCtrl.pop();
                         this.showMessage('Los datos del negocio han sido guardados con éxito.');
                       }
                     );
                 } else {
-                  this.session.business = tempBusiness;
-                  this.securityProvider.storeSession(this.session);
+                  this.business = tempBusiness;
+                  this.session.business = this.business.id;
                   loading.dismiss();
                   this.navCtrl.pop();
                   this.showMessage('Los datos del negocio han sido guardados con éxito.');
@@ -405,7 +409,7 @@ export class BusinessRegisterPage {
             });
 
             loading.present().then(() => {
-              this.businessProvider.deleteBusiness(this.session.business.id).subscribe(
+              this.businessProvider.deleteBusiness(this.business.id).subscribe(
                 (res: any) => {
                   this.session.business = undefined;
                   this.securityProvider.storeSession(this.session);

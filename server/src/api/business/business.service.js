@@ -65,6 +65,12 @@ const update = async (userId, businessId, name, phone, type, location, cover) =>
   return business;
 };
 
+const findOne = async (id) => {
+  const business = await Business.findById(id);
+
+  return business;
+};
+
 const findAll = async (status) => {
   const query = Business.find({});
 
@@ -142,6 +148,7 @@ const removeImage = async (userId, businessId, imageId) => {
 module.exports = {
   create,
   update,
+  findOne,
   findAll,
   changeStatus,
   remove,

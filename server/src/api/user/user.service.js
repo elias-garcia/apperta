@@ -5,6 +5,7 @@ const ApiError = require('../api-error');
 
 const register = async (email, password, firstName, lastName) => {
   const oldUser = await User.findOne({ email });
+
   if (oldUser) {
     throw new ApiError(409, 'user already exists');
   }
@@ -28,6 +29,7 @@ const register = async (email, password, firstName, lastName) => {
     lastName: newUser.lastName,
     role: newUser.role,
     token,
+    business: oldUser.business,
   };
 };
 

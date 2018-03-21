@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Promocionar negocio</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="business?.isPromoted"
+       padding>
+    <p text-justify>Actualmente su negocio ya está siendo promocionado.</p>
+  </div>
+  <div *ngIf="!business?.isPromoted"
+       padding>
+    <p text-justify>La función promocionar tu negocio hará que tu negocio aparezca entre los primeros resultados de todas las búsquedas relacionadas
+      con él durante un período de un mes.</p>
+    <p>Tarifa:
+      <span>
+        <b>1,79€</b>
+      </span>
+    </p>
+  </div>
+  <ion-list>
+    <ion-list-header>
+      Tarjeta de crédito o de débito
+    </ion-list-header>
+    <div class="payment-form-wrapper">
+      <form id="payment-form"
+            (submit)="onSubmitStripeForm()">
+
+        <div id="card-element">
+        </div>
+        <div id="card-errors"
+             #cardErrors
+             role="alert"></div>
+
+        <button ion-button
+                type="submit"
+                full>Promocionar negocio</button>
+      </form>
+    </div>
+  </ion-list>
+</ion-content>

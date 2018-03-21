@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ navParams.get('name') }}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list *ngIf="navParams.get('ratings')">
+    <ion-list-header>
+      Opiniones
+    </ion-list-header>
+    <ion-item class="rating"
+              *ngFor="let rating of navParams.get('ratings')">
+      <div>
+        <ion-avatar item-start>
+          <img src="assets/imgs/restaurant.jpeg" />
+        </ion-avatar>
+      </div>
+      <div>
+        <h2 class="rating-title">{{ rating.title}}</h2>
+        <div class="rating-subtitle">
+          <div>
+            <ion-icon *ngFor="let score of Array(rating.score)"
+                      name="star"></ion-icon>
+          </div>
+          <p>28 Mar. 2018</p>
+        </div>
+        <p class="rating-details">{{ rating.comment }}</p>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

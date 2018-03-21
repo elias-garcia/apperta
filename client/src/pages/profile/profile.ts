@@ -7,6 +7,7 @@ import { BusinessRegisterPage } from '../business-register/business-register';
 import { SecurityProvider } from '../../providers/security.provider';
 import { Session } from '../../shared/models/session.model';
 import { Role } from '../../shared/models/role.enum';
+import { PromoteBusinessPage } from '../promote-business/promote-business';
 
 @IonicPage()
 @Component({
@@ -53,16 +54,20 @@ export class ProfilePage {
     this.navCtrl.push(RegisterPage, { mode: 'edit' });
   }
 
+  onOpenPromoteBusinessPage() {
+    this.navCtrl.push(PromoteBusinessPage, { session: this.session });
+  }
+
   onOpenBusinessApprovalPage() {
     this.navCtrl.push(BusinessApprovalPage);
   }
 
   onOpenBusinessRegisterPage() {
-    this.navCtrl.push(BusinessRegisterPage, { mode: 'new', session: this.session });
+    this.navCtrl.push(BusinessRegisterPage, { mode: 'new' });
   }
 
   onOpenBusinessEditPage() {
-    this.navCtrl.push(BusinessRegisterPage, { mode: 'edit', session: this.session });
+    this.navCtrl.push(BusinessRegisterPage, { mode: 'edit' });
   }
 
   onLogout() {

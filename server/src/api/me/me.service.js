@@ -48,6 +48,7 @@ const updatePassword = async (userId, oldPassword, newPassword) => {
 
 const resetPassword = async (email, token, newPassword) => {
   const user = await User.findOne({ email });
+
   if (!user) {
     throw new ApiError(404, 'user not found');
   }
@@ -77,6 +78,7 @@ const resetPassword = async (email, token, newPassword) => {
     lastName: user.lastName,
     role: user.role,
     token: sessionToken,
+    business: user.business,
   };
 };
 

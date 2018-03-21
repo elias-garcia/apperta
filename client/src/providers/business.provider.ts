@@ -26,6 +26,10 @@ export class BusinessProvider {
     return this.http.put(`${environment.apiUrl}/businesses/${businessId}`, editData);
   }
 
+  getBusiness(businessId: string) {
+    return this.http.get(`${environment.apiUrl}/businesses/${businessId}`);
+  }
+
   getBusinesses(status?: BusinessStatus) {
     let params = new HttpParams();
 

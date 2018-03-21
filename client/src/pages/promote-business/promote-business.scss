@@ -1,0 +1,15 @@
+page-promote-business {
+  .payment-form-wrapper {
+    margin: 16px;
+  }
+
+  #card-errors {
+    color: color($colors, danger);
+    margin-top: 8px;
+  }
+
+  .button {
+    margin-top: 16px;
+  }
+
+}

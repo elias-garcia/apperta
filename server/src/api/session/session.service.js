@@ -5,7 +5,8 @@ const User = require('../user/user.model');
 const ApiError = require('../api-error');
 
 const logIn = async (email, password) => {
-  const user = await User.findOne({ email }).populate('business');
+  const user = await User.findOne({ email });
+
   if (!user) {
     throw new ApiError(403, 'email not found');
   }

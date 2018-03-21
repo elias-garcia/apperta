@@ -61,7 +61,7 @@
       </ion-item>
       <ng-container *ngIf="ratings.length">
         <ion-item class="rating"
-                  *ngFor="let rating of ratings">
+                  *ngFor="let rating of ratings.slice(0, 5)">
           <div>
             <ion-avatar item-start>
               <img src="assets/imgs/restaurant.jpeg" />
@@ -84,7 +84,7 @@
                 class="empty-ratings-item">
         <p text-center>Este negocio aún no tiene opiniones</p>
       </ion-item>
-      <button *ngIf="(session && !session.business) || (session && session.business && session.business.id !== business.id)"
+      <button *ngIf="(session && !session.business) || (session && session.business !== business.id)"
               ion-item
               detail-push
               text-wrap
@@ -93,9 +93,11 @@
                   item-start></ion-icon>
         Escribir una opinión
       </button>
-      <button ion-item
+      <button *ngIf="ratings.length > 5"
+              ion-item
               detail-push
-              text-wrap>
+              text-wrap
+              (click)="onOpenAllRatingsPage()">
         <ion-icon name="eye"
                   item-start></ion-icon>
         Ver todas las opiniones

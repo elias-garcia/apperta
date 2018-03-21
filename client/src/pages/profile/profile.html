@@ -50,7 +50,8 @@
     </button>
     <button *ngIf="session && session.business"
             ion-item
-            detail-push>
+            detail-push
+            (click)="onOpenPromoteBusinessPage()">
       <ion-icon name="cash"
                 item-start></ion-icon>
       Promocionar negocio

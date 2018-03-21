@@ -10,6 +10,11 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
+  <ion-refresher (ionRefresh)="refreshBusinesses($event)"
+                 pullingIcon="arrow-down"
+                 refreshingSpinner="circles">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ng-container *ngIf="businesses">
     <ng-container *ngFor="let business of businesses">
       <ion-card (click)="onCardClick(business)">

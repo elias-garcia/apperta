@@ -12,6 +12,7 @@ import { Session } from '../../shared/models/session.model';
 import { Rating } from '../../shared/models/rating.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RatingStats } from '../../shared/models/rating-stats.model';
+import { AllRatingsPage } from '../all-ratings/all-ratings';
 
 @Component({
   selector: 'page-bussiness-home',
@@ -87,6 +88,10 @@ export class BussinessHomePage {
 
   onOpenNewRatingPage() {
     this.navCtrl.push(NewRatingPage, { business: this.business });
+  }
+
+  onOpenAllRatingsPage() {
+    this.navCtrl.push(AllRatingsPage, { name: this.business.name, ratings: this.ratings });
   }
 
   onShowConfirm(status: BusinessStatus) {

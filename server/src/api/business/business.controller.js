@@ -61,12 +61,27 @@ const update = async (req, res, next) => {
   }
 };
 
+const findOne = async (req, res, next) => {
+  try {
+    if (!req.params.id) {
+      throw new ApiError(422, 'unprocessable entity');
+    }
+
+    const business = await businessService.findOne(req.params.id);
+
+    return res.json(json.createData([{ title: 'business', data: businessDto.toBusinessDto(business) }]));
+  } catch (err) {
+    return next(err);
+  }
+};
+
 const findAll = async (req, res, next) => {
   try {
     if (!req.query.status
       || !Object.keys(BusinessStatus).includes(req.query.status)) {
       throw new ApiError(422, 'unprocessable entity');
     }
+
     const businesses = await businessService.findAll(req.query.status);
 
     return res.json(json.createData([{ title: 'businesses', data: businessDto.toBusinessesDto(businesses) }]));
@@ -142,6 +157,7 @@ const removeImage = async (req, res, next) => {
 module.exports = {
   create,
   update,
+  findOne,
   findAll,
   changeStatus,
   remove,
