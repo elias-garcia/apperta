@@ -42,6 +42,7 @@ const configure = (app) => {
   app.post(`${appConfig.path}/businesses/:businessId/images`, middleware.auth);
   app.delete(`${appConfig.path}/businesses/:businessId/images/:imageId`, middleware.auth);
   app.post(`${appConfig.path}/businesses/:id/ratings`, middleware.auth);
+  app.post(`${appConfig.path}/payments`, middleware.auth);
 
   /* Routing configuration */
   app.use(appConfig.path, routes);

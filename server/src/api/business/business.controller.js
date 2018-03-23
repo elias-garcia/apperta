@@ -77,12 +77,12 @@ const findOne = async (req, res, next) => {
 
 const findAll = async (req, res, next) => {
   try {
-    if (!req.query.status
-      || !Object.keys(BusinessStatus).includes(req.query.status)) {
+    if (req.query.status
+      && !Object.keys(BusinessStatus).includes(req.query.status)) {
       throw new ApiError(422, 'unprocessable entity');
     }
 
-    const businesses = await businessService.findAll(req.query.status);
+    const businesses = await businessService.findAll(req.query.status, req.query.name);
 
     return res.json(json.createData([{ title: 'businesses', data: businessDto.toBusinessesDto(businesses) }]));
   } catch (err) {

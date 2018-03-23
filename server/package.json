@@ -1,12 +1,13 @@
 {
-  "name": "sporter-api",
+  "name": "apertapp-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "API for the mobile version",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon ./src/app.js",
     "start": "node ./src/app.js",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "deploy": "git subtree push --prefix server heroku master"
   },
   "author": "Elías García",
   "repository": {
@@ -25,11 +26,13 @@
     "mongoose": "^4.13.4",
     "morgan": "^1.8.2",
     "nodemailer": "^4.4.0",
+    "stripe": "^5.5.0",
     "validator": "^8.2.0"
   },
   "devDependencies": {
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0",
     "nodemon": "^1.12.0"
   }
 }

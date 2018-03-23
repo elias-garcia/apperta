@@ -10,6 +10,10 @@ agenda.on('ready', () => {
     jobTypes.PASSWORD_RESET_TOKEN_EXPIRE,
     jobs.passwordResetTokenJobs.passwordResetTokenJob,
   );
+  agenda.define(
+    jobTypes.BUSINESS_PROMOTION_EXPIRE,
+    jobs.businessJobs.expireToken,
+  );
   agenda.start();
 });
 

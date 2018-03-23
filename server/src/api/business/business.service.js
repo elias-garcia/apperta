@@ -71,14 +71,18 @@ const findOne = async (id) => {
   return business;
 };
 
-const findAll = async (status) => {
+const findAll = async (status, name) => {
   const query = Business.find({});
 
   if (status) {
     query.where({ status });
   }
 
-  const businesses = await query.populate('owner', '-password');
+  if (name) {
+    query.where({ name: new RegExp(name, 'i') });
+  }
+
+  const businesses = await query.sort({ isPromoted: -1 }).populate('owner', '-password');
 
   return businesses;
 };

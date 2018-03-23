@@ -6,7 +6,9 @@
   <ion-toolbar no-border-top
                class="toolbar-search"
                color="primary">
-    <ion-searchbar placeholder="Buscar..."></ion-searchbar>
+    <ion-searchbar #searchbar
+                   placeholder="Buscar..."
+                   (ionInput)="term$.next($event.target.value)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content padding>

@@ -30,11 +30,15 @@ export class BusinessProvider {
     return this.http.get(`${environment.apiUrl}/businesses/${businessId}`);
   }
 
-  getBusinesses(status?: BusinessStatus) {
+  getBusinesses(status?: BusinessStatus, name?: string) {
     let params = new HttpParams();
 
     if (status) {
       params = params.set('status', status);
+    }
+
+    if (name) {
+      params = params.set('name', name);
     }
 
     return this.http.get(`${environment.apiUrl}/businesses`, { params });
@@ -60,6 +64,10 @@ export class BusinessProvider {
     }
 
     return this.http.get(`${environment.apiUrl}/businesses/${businessId}/ratings`, { params });
+  }
+
+  promoteBusiness(token: string) {
+    return this.http.post(`${environment.apiUrl}/payments`, { token });
   }
 
 }
