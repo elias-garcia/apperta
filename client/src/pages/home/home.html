@@ -26,10 +26,16 @@
             <ion-card-title>
               {{ business.name }}
             </ion-card-title>
-            <div class="avg-rating">
+            <div class="avg-rating"
+                 *ngIf="business.avgRating > 0">
               <h2>{{ business.avgRating }}</h2>
               <ion-icon name="star"
                         class="star-icon"></ion-icon>
+            </div>
+            <div text-center
+                 class="avg-rating"
+                 *ngIf="business.avgRating === 0">
+              Sin opiniones
             </div>
           </div>
           <div class="subtitle">
