@@ -9,6 +9,7 @@ import { MapsPage } from "../maps/maps";
 import { NewRatingPage } from "../new-rating/new-rating";
 import { AllRatingsPage } from "../all-ratings/all-ratings";
 import { FiltersPage } from "../filters/filters";
+import { BusinessTypePipe } from "../../shared/pipes/business-type.pipe";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FiltersPage } from "../filters/filters";
     MapsPage,
     NewRatingPage,
     AllRatingsPage,
-    FiltersPage
+    FiltersPage,
+    BusinessTypePipe
   ],
   imports: [
     IonicPageModule.forChild(HomePage),

@@ -27,14 +27,18 @@
               {{ business.name }}
             </ion-card-title>
             <div class="avg-rating">
-              <h2>4,5/10</h2>
+              <h2>{{ business.avgRating }}</h2>
               <ion-icon name="star"
                         class="star-icon"></ion-icon>
             </div>
           </div>
+          <div class="subtitle">
+            <p>{{ business.type | businessType }}</p>
+            <ion-badge *ngIf="business.isPromoted">Destacado</ion-badge>
+          </div>
           <ion-icon name="compass"
                     class="compass-icon"></ion-icon>
-          <p>{{ business.location.address }}</p>
+          <p class="location-text">{{ business.location.address }}</p>
         </ion-card-content>
       </ion-card>
     </ng-container>

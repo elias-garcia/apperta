@@ -28,6 +28,16 @@ page-home {
     justify-content: space-between;
   }
 
+  .subtitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    p {
+      margin: 0;
+    }
+  }
+
   ion-icon {
     font-size: 1.4em;
   }
@@ -35,15 +45,21 @@ page-home {
   .avg-rating {
     h2 {
       margin: 0 0;
+      font-size: 18px;
     }
     ion-icon {
-      margin-left: 6px;
+      margin-left: 8px;
+      margin-bottom: 4px;
     }
   }
 
   .compass-icon {
     float: left;
     margin-right: 8px;
+  }
+
+  .location-text {
+    margin-bottom: 0;
   }
 
   ion-fab[center] {

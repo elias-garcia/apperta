@@ -18,7 +18,7 @@ import { GeolocationProvider } from '../providers/geolocation.provider';
 
 @NgModule({
   declarations: [
-    MyApp,
+    MyApp
   ],
   imports: [
     BrowserModule,
