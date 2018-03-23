@@ -19,6 +19,7 @@ export interface Business {
     coordinates: [number, number]
   };
   isPromoted: boolean;
+  avgRating?: number;
   cover: Image;
   images: Image[]
 }

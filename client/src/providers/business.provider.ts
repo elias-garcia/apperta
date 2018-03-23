@@ -4,6 +4,7 @@ import { environment } from "../environment";
 import { BusinessRegisterData } from "../pages/business-register/business-register-data";
 import { BusinessStatus } from "../shared/models/business-status.enum"
 import { RatingData } from "../pages/new-rating/rating-data";
+import { BusinessType } from "../shared/models/business-type.enum";
 
 @Injectable()
 export class BusinessProvider {
@@ -30,7 +31,7 @@ export class BusinessProvider {
     return this.http.get(`${environment.apiUrl}/businesses/${businessId}`);
   }
 
-  getBusinesses(status?: BusinessStatus, name?: string) {
+  getBusinesses(status?: BusinessStatus, name?: string, type?: BusinessType, avgRating?: number) {
     let params = new HttpParams();
 
     if (status) {
@@ -39,6 +40,14 @@ export class BusinessProvider {
 
     if (name) {
       params = params.set('name', name);
+    }
+
+    if (type) {
+      params = params.set('type', type);
+    }
+
+    if (avgRating) {
+      params = params.set('avgRating', String(avgRating));
     }
 
     return this.http.get(`${environment.apiUrl}/businesses`, { params });

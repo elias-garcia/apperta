@@ -1,5 +1,6 @@
 const ApiError = require('../api-error');
 const BusinessStatus = require('./business-status.enum');
+const BusinessType = require('./business-type.enum');
 const Roles = require('../user/roles.enum');
 const businessService = require('./business.service');
 const json = require('../../util/json');
@@ -77,12 +78,17 @@ const findOne = async (req, res, next) => {
 
 const findAll = async (req, res, next) => {
   try {
-    if (req.query.status
-      && !Object.keys(BusinessStatus).includes(req.query.status)) {
+    if ((req.query.status && !Object.keys(BusinessStatus).includes(req.query.status))
+      || (req.query.type && !Object.keys(BusinessType).includes(req.query.type))) {
       throw new ApiError(422, 'unprocessable entity');
     }
 
-    const businesses = await businessService.findAll(req.query.status, req.query.name);
+    const businesses = await businessService.findAll(
+      req.query.status,
+      req.query.name,
+      req.query.type,
+      req.query.avgRating,
+    );
 
     return res.json(json.createData([{ title: 'businesses', data: businessDto.toBusinessesDto(businesses) }]));
   } catch (err) {

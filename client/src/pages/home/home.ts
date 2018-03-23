@@ -79,8 +79,9 @@ export class HomePage {
   }
 
   filterBusinesses(filters: any) {
-    this.filters = filters;
-    console.log(filters);
+    if (filters) {
+      this.filters = filters;
+    }
   }
 
   onCardClick(business: Business) {

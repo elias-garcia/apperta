@@ -2,6 +2,7 @@ const cloudinary = require('cloudinary');
 const ApiError = require('../api-error');
 const Business = require('./business.model');
 const User = require('../user/user.model');
+const Rating = require('./rating/rating.model');
 
 const create = async (ownerId, name, phone, type, location, cover) => {
   const user = await User.findById(ownerId);
@@ -71,7 +72,7 @@ const findOne = async (id) => {
   return business;
 };
 
-const findAll = async (status, name) => {
+const findAll = async (status, name, type, avgRating) => {
   const query = Business.find({});
 
   if (status) {
@@ -82,7 +83,32 @@ const findAll = async (status, name) => {
     query.where({ name: new RegExp(name, 'i') });
   }
 
-  const businesses = await query.sort({ isPromoted: -1 }).populate('owner', '-password');
+  if (type) {
+    query.where({ type });
+  }
+
+  let businesses = await query.sort({ isPromoted: -1 }).populate('owner', '-password');
+
+  businesses = await Promise.all(businesses.map(async (business) => {
+    const tempBusiness = business.toObject();
+    const ratings = await Rating.find({ business: business.id });
+
+    if (ratings && ratings.length) {
+      const totalScore = ratings
+        .map(rating => rating.score)
+        .reduce((a, b) => a + b);
+
+      tempBusiness.avgRating = totalScore / ratings.length;
+    } else {
+      tempBusiness.avgRating = 0;
+    }
+
+    return tempBusiness;
+  }));
+
+  if (avgRating) {
+    businesses = businesses.filter(business => business.avgRating >= avgRating);
+  }
 
   return businesses;
 };
