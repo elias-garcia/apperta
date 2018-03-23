@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, Refresher } from 'ionic-angular';
+import { NavController, LoadingController, Refresher, ModalController } from 'ionic-angular';
 
 import { BussinessHomePage } from '../bussiness-home/bussiness-home';
 import { BusinessProvider } from '../../providers/business.provider';
@@ -8,6 +8,7 @@ import { BusinessStatus } from '../../shared/models/business-status.enum';
 import { Subject } from 'rxjs/Subject';
 import { debounceTime } from 'rxjs/operators/debounceTime';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { FiltersPage } from '../filters/filters';
 
 @Component({
   selector: 'page-home',
@@ -17,11 +18,13 @@ export class HomePage {
 
   public businesses: Business[];
   public term$ = new Subject<string>();
+  public filters: any = { type: '', avgRating: '' };
 
   constructor(
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
-    public businessProvider: BusinessProvider
+    public modalCtrl: ModalController,
+    private businessProvider: BusinessProvider
   ) {
     this.getBusinesses();
     this.listenToSearchInput();
@@ -68,12 +71,20 @@ export class HomePage {
     );
   }
 
-  onCardClick(business: Business) {
-    this.navCtrl.push(BussinessHomePage, { mode: 'view', business });
+  onShowFiltersModal() {
+    const modal = this.modalCtrl.create(FiltersPage, { filters: this.filters });
+
+    modal.onDidDismiss((data: any) => this.filterBusinesses(data));
+    modal.present();
   }
 
-  onSearchbarChanges(event) {
-    console.log(event);
+  filterBusinesses(filters: any) {
+    this.filters = filters;
+    console.log(filters);
+  }
+
+  onCardClick(business: Business) {
+    this.navCtrl.push(BussinessHomePage, { mode: 'view', business });
   }
 
 }

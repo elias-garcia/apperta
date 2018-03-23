@@ -8,6 +8,7 @@ import { GalleryPage } from "../gallery/gallery";
 import { MapsPage } from "../maps/maps";
 import { NewRatingPage } from "../new-rating/new-rating";
 import { AllRatingsPage } from "../all-ratings/all-ratings";
+import { FiltersPage } from "../filters/filters";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AllRatingsPage } from "../all-ratings/all-ratings";
     GalleryPage,
     MapsPage,
     NewRatingPage,
-    AllRatingsPage
+    AllRatingsPage,
+    FiltersPage
   ],
   imports: [
     IonicPageModule.forChild(HomePage),
@@ -28,7 +30,8 @@ import { AllRatingsPage } from "../all-ratings/all-ratings";
     GalleryPage,
     MapsPage,
     NewRatingPage,
-    AllRatingsPage
+    AllRatingsPage,
+    FiltersPage
   ]
 })
 export class HomePageModule { }

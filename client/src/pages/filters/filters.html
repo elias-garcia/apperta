@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons start>
+      <button ion-button
+              showWhen="ios"
+              (click)="onCloseModal()">
+        <span ion-text>Cancelar</span>
+      </button>
+      <button ion-button
+              showWhen="android,windows"
+              (click)="onResetFilters()">
+        <span ion-text>Borrar</span>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Filtros
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button
+              showWhen="ios"
+              (click)="onResetFilters()">
+        <span ion-text>Borrar</span>
+      </button>
+      <button ion-button
+              showWhen="android,windows"
+              (click)="onCloseModal()">
+        <ion-icon name="md-close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="filtersForm">
+    <ion-list class="first-list">
+      <ion-list-header>
+        General
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Tipo de negocio</ion-label>
+        <ion-select interface="popover"
+                    formControlName="type">
+          <ion-option [value]="BusinessType.RESTAURANT">Restaurante</ion-option>
+          <ion-option [value]="BusinessType.COFFEE_SHOP">Cafetería</ion-option>
+          <ion-option [value]="BusinessType.BAR_PUB">Bar/Pub</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group
+              formControlName="avgRating">
+      <ion-list-header>
+        Valoración media
+      </ion-list-header>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          &nbsp;+
+        </ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          &nbsp;+
+        </ion-label>
+        <ion-radio value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          &nbsp;+
+        </ion-label>
+        <ion-radio value="5"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-footer>
+      <ion-toolbar class="bottom-toolbar">
+        <button ion-button
+                full
+                type="submit"
+                [disabled]="type.invalid && avgRating.invalid"
+                (click)="onFilter()">Filtrar</button>
+      </ion-toolbar>
+    </ion-footer>
+  </form>
+</ion-content>
