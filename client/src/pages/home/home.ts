@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, Refresher, ModalController } from 'ionic-angular';
+import { NavController, LoadingController, Refresher, ModalController, Loading } from 'ionic-angular';
 
 import { BussinessHomePage } from '../bussiness-home/bussiness-home';
 import { BusinessProvider } from '../../providers/business.provider';
@@ -18,6 +18,7 @@ export class HomePage {
 
   public businesses: Business[];
   public term$ = new Subject<string>();
+  public term: string;
   public filters: any = { type: '', avgRating: '' };
 
   constructor(
@@ -34,8 +35,9 @@ export class HomePage {
     this.term$.pipe(
       debounceTime(400),
       distinctUntilChanged()
-    ).subscribe((name: string) => {
-      this.getBusinessesByName(name);
+    ).subscribe((term: string) => {
+      this.term = term;
+      this.getBusinessesByParams();
     })
   }
 
@@ -54,19 +56,22 @@ export class HomePage {
     });
   }
 
-  getBusinessesByName(name: string) {
-    this.businessProvider.getBusinesses(BusinessStatus.APPROVED, name).subscribe(
+  getBusinessesByParams(loader?: Refresher | Loading) {
+    this.businessProvider.getBusinesses(
+      BusinessStatus.APPROVED,
+      this.term,
+      this.filters.type,
+      this.filters.avgRating
+    ).subscribe(
       (res: any) => {
         this.businesses = res.businesses;
-      }
-    );
-  }
-
-  refreshBusinesses(refresher: Refresher) {
-    this.businessProvider.getBusinesses(BusinessStatus.APPROVED).subscribe(
-      (res: any) => {
-        this.businesses = res.businesses;
-        refresher.complete();
+        if (loader) {
+          if (loader instanceof Refresher) {
+            loader.complete();
+          } else {
+            loader.dismiss();
+          }
+        }
       }
     );
   }
@@ -80,7 +85,14 @@ export class HomePage {
 
   filterBusinesses(filters: any) {
     if (filters) {
-      this.filters = filters;
+      const loading = this.loadingCtrl.create({
+        content: 'Cargando...'
+      });
+
+      loading.present().then(() => {
+        this.filters = filters;
+        this.getBusinessesByParams(loading);
+      });
     }
   }
 

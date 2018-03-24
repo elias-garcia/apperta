@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <ion-refresher (ionRefresh)="refreshBusinesses($event)"
+  <ion-refresher (ionRefresh)="getBusinessesByParams($event)"
                  pullingIcon="arrow-down"
                  refreshingSpinner="circles">
     <ion-refresher-content></ion-refresher-content>
@@ -49,6 +49,8 @@
       </ion-card>
     </ng-container>
   </ng-container>
+  <p text-center
+     *ngIf="businesses && !businesses.length">No se han encontrado negocios que coincidan con los parámetros de búsqueda especificados</p>
   <ion-fab center
            bottom>
     <button ion-fab

@@ -25,8 +25,8 @@ export class FiltersPage {
     const filters = this.navParams.get('filters');
 
     this.filtersForm = this.fb.group({
-      type: [filters.type, Validators.required],
-      avgRating: [filters.avgRating, Validators.required]
+      type: [filters.type],
+      avgRating: [filters.avgRating]
     });
   }
 
