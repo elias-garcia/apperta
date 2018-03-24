@@ -20,6 +20,7 @@ export class HomePage {
   public term$ = new Subject<string>();
   public term: string;
   public filters: any = { type: '', avgRating: '' };
+  public filtersNumber = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -91,9 +92,19 @@ export class HomePage {
 
       loading.present().then(() => {
         this.filters = filters;
+        this.calcFiltersNumber();
         this.getBusinessesByParams(loading);
       });
     }
+  }
+
+  calcFiltersNumber() {
+    this.filtersNumber = 0;
+    Object.keys(this.filters).map(key => {
+      if (this.filters[key]) {
+        this.filtersNumber++;
+      }
+    });
   }
 
   onCardClick(business: Business) {

@@ -56,8 +56,8 @@
     <button ion-fab
             color="light"
             (click)="onShowFiltersModal()">
-      <ion-icon name="switch"></ion-icon>
       Filtros
+      <ion-badge *ngIf="filtersNumber > 0">{{ filtersNumber }}</ion-badge>
     </button>
   </ion-fab>
 </ion-content>
