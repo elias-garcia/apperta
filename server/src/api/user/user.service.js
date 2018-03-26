@@ -29,7 +29,7 @@ const register = async (email, password, firstName, lastName) => {
     lastName: newUser.lastName,
     role: newUser.role,
     token,
-    business: oldUser.business,
+    business: undefined,
   };
 };
 
