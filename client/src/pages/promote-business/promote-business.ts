@@ -87,6 +87,7 @@ export class PromoteBusinessPage {
           const errorElement = document.getElementById('card-errors');
 
           errorElement.textContent = result.error.message;
+          loading.dismiss();
         } else {
           this.promoteBusiness(result.token.id, loading);
         }
