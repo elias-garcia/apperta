@@ -48,7 +48,6 @@ export class BussinessHomePage {
       this.business = this.navParams.get('business');
       this.getSession();
       this.getRatings(loading);
-      console.log('pasa');
     });
   }
 
