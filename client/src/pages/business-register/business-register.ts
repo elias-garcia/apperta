@@ -64,7 +64,9 @@ export class BusinessRegisterPage {
         this.securityProvider.getSession().subscribe(
           (session: Session) => {
             this.session = session;
-            this.getBusiness(session.business, loading);
+            if (session && session.business) {
+              this.getBusiness(session.business, loading);
+            }
           }
         );
       });

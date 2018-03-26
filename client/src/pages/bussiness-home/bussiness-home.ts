@@ -39,7 +39,7 @@ export class BussinessHomePage {
   ) {
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     const loading: Loading = this.loadingCtrl.create({
       content: 'Cargando...'
     });
@@ -48,6 +48,7 @@ export class BussinessHomePage {
       this.business = this.navParams.get('business');
       this.getSession();
       this.getRatings(loading);
+      console.log('pasa');
     });
   }
 

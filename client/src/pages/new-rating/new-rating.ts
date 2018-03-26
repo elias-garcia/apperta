@@ -1,4 +1,4 @@
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Loading, LoadingController, Toast, ToastController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { RatingData } from './rating-data';
@@ -23,6 +23,8 @@ export class NewRatingPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController,
     private fb: FormBuilder,
     private businessProvider: BusinessProvider
   ) {
@@ -54,18 +56,41 @@ export class NewRatingPage {
   }
 
   onSubmitRating() {
-    const ratingData: RatingData = {
-      score: this.score.value,
-      title: this.title.value,
-      comment: this.comment.value
-    };
+    const loading: Loading = this.loadingCtrl.create({
+      content: 'Por favor, espere...'
+    });
 
-    this.businessProvider.submitRating(this.business.id, ratingData)
-      .subscribe(
-        (res: any) => {
-          console.log(res);
-        }
-      )
+    loading.present().then(() => {
+      const ratingData: RatingData = {
+        score: this.score.value,
+        title: this.title.value,
+        comment: this.comment.value
+      };
+
+      this.businessProvider.submitRating(this.business.id, ratingData)
+        .subscribe(
+          (res: any) => {
+            loading.dismiss();
+            this.showMessage('La opinión ha sido enviada con éxito.')
+            this.navCtrl.pop();
+          },
+          (err: any) => {
+            loading.dismiss();
+            this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.')
+          }
+        )
+    });
+  }
+
+  showMessage(message: string) {
+    const toast: Toast = this.toastCtrl.create({
+      message,
+      showCloseButton: true,
+      closeButtonText: 'Ok',
+      duration: 3000
+    });
+
+    toast.present();
   }
 
   get score(): AbstractControl {
