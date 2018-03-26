@@ -73,6 +73,7 @@ page-home {
         color: color($colors, primary);
         flex: 0;
         margin-right: 12px;
+        font-size: 20px;
       }
       .button-inner {
         display: flex;
@@ -81,8 +82,16 @@ page-home {
       }
     }
     .badge {
-      margin-left: 8px;
+      margin-left: 12px;
     }
+  }
+
+  .button-wider {
+    width: 140px !important;
+  }
+
+  .fab-wider {
+    margin-left: -70px !important;
   }
 
 }

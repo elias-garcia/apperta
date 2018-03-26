@@ -52,10 +52,13 @@
   <p text-center
      *ngIf="businesses && !businesses.length">No se han encontrado negocios que coincidan con los parámetros de búsqueda especificados</p>
   <ion-fab center
+           [ngClass]="{'fab-wider': filtersNumber > 0}"
            bottom>
     <button ion-fab
+            [ngClass]="{'button-wider': filtersNumber > 0}"
             color="light"
             (click)="onShowFiltersModal()">
+      <ion-icon name="switch"></ion-icon>
       Filtros
       <ion-badge *ngIf="filtersNumber > 0">{{ filtersNumber }}</ion-badge>
     </button>
