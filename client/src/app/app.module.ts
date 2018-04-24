@@ -16,6 +16,7 @@ import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { BusinessProvider } from '../providers/business.provider';
 import { GeolocationProvider } from '../providers/geolocation.provider';
 import { ErrorInterceptor } from '../interceptors/error.interceptor';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ErrorInterceptor } from '../interceptors/error.interceptor';
   providers: [
     StatusBar,
     SplashScreen,
+    InAppBrowser,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JSONInterceptor,

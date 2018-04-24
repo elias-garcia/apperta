@@ -1,5 +1,5 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { SecurityProvider } from '../providers/security.provider';
 import { tap } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     private toastCtrl: ToastController,
     private app: App
   ) {
-    this.navCtrl = app.getActiveNav();
+    this.navCtrl = this.app.getActiveNav();
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

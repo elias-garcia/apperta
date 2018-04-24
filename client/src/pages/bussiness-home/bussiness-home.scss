@@ -50,6 +50,7 @@ page-bussiness-home {
       margin-right: 8px;
     }
     .button {
+      background-color: color($colors, tripadvisor);
       margin: 0;
     }
   }
@@ -61,6 +62,9 @@ page-bussiness-home {
     .item-description .label {
       white-space: normal;
       line-height: 24px;
+    }
+    .icon {
+      color: color($colors, primary);
     }
   }
 
@@ -122,6 +126,7 @@ page-bussiness-home {
       align-items: center;
       ion-icon {
         font-size: 1em;
+        margin-right: 2px;
       }
       p {
         margin-left: 10px;
