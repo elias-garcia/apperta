@@ -75,8 +75,10 @@ export class NewRatingPage {
             this.navCtrl.pop();
           },
           (err: any) => {
-            loading.dismiss();
-            this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.')
+            if (err.status !== 401) {
+              loading.dismiss();
+              this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.')
+            }
           }
         )
     });

@@ -65,8 +65,10 @@ export class PasswordResetPage {
               this.email.setErrors({ 'emailDoesNotExist': true });
               break
             default:
-              this.viewCtrl.dismiss();
-              this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.');
+              if (error.status !== 401) {
+                this.viewCtrl.dismiss();
+                this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.');
+              }
           }
         }
       )
@@ -104,8 +106,10 @@ export class PasswordResetPage {
               this.token.setErrors({ notValidToken: true });
               break;
             default:
-              this.navCtrl.pop();
-              this.showMessage('Ha ocurrido un error. Por favor, vuelva a intentarlo.');
+              if (err.status !== 401) {
+                this.navCtrl.pop();
+                this.showMessage('Ha ocurrido un error. Por favor, vuelva a intentarlo.');
+              }
           }
         }
       );

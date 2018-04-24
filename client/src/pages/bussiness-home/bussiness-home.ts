@@ -156,8 +156,10 @@ export class BussinessHomePage {
           this.navCtrl.pop();
         },
         (error: any) => {
-          this.showMessage('Ha ocurrido un error. Por favor, vuelva a intentarlo.');
-          loading.dismiss();
+          if (error !== 401) {
+            this.showMessage('Ha ocurrido un error. Por favor, vuelva a intentarlo.');
+            loading.dismiss();
+          }
         }
       )
     })

@@ -107,8 +107,10 @@ export class RegisterPage {
           if (err.status === 409) {
             this.email.setErrors({ duplicatedEmail: true });
           } else {
-            this.viewCtrl.dismiss();
-            this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.');
+            if (err.status !== 401) {
+              this.viewCtrl.dismiss();
+              this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.');
+            }
           }
         }
       );
@@ -134,8 +136,10 @@ export class RegisterPage {
             if (error.status === 409) {
               this.email.setErrors({ duplicatedEmail: true });
             } else {
-              this.navCtrl.pop();
-              this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.');
+              if (error.status !== 401) {
+                this.navCtrl.pop();
+                this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.');
+              }
             }
           }
         )
@@ -161,8 +165,10 @@ export class RegisterPage {
             if (error.status === 422) {
               this.password.setErrors({ oldPasswordDoestNotMatch: true });
             } else {
-              this.navCtrl.pop();
-              this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.');
+              if (error.status !== 401) {
+                this.navCtrl.pop();
+                this.showMessage('Ha ocurrido un error. Por favor, vuelve a intentarlo.');
+              }
             }
           }
         )
