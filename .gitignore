@@ -33,3 +33,5 @@
 **/.DS_Store
 **/Thumbs.db
 **/UserInterfaceState.xcuserstate
+
+server/newrelic_agent.log

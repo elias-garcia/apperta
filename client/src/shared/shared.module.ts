@@ -3,10 +3,12 @@ import { IonicModule } from "ionic-angular";
 
 import { AverageRatingComponent } from "./components/average-rating/average-rating.component";
 import { SingleImagePage } from "./pages/single-image/single-image";
+import { RatingDotsComponent } from "./components/rating-dots/rating-dots.component";
 
 @NgModule({
   declarations: [
     AverageRatingComponent,
+    RatingDotsComponent,
     SingleImagePage,
   ],
   imports: [
@@ -14,6 +16,7 @@ import { SingleImagePage } from "./pages/single-image/single-image";
   ],
   exports: [
     AverageRatingComponent,
+    RatingDotsComponent,
     SingleImagePage
   ],
   entryComponents: [

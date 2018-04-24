@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -11,6 +11,8 @@ import { ProfilePage } from '../pages/profile/profile';
 })
 export class MyApp {
 
+  @ViewChild(Nav) nav: Nav;
+
   public homePage: any = HomePage;
   public profilePage: any = ProfilePage;
 
@@ -21,6 +23,10 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+  }
+
+  openPage(page) {
+    this.nav.setRoot(page);
   }
 
 }

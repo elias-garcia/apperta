@@ -3,10 +3,9 @@
     <ion-col col-12
              class="avg-rating">
       <div class="avg-rating-text">
-        <h1>{{ ratingStats.averageRating }}</h1>
-        <ion-icon name="star"></ion-icon>
+        <rating-dots [avgRating]="ratingStats.averageRating"></rating-dots>
       </div>
-      <p>Basado en {{ ratingStats.totalCount }} opiniones</p>
+      <p>{{ ratingStats.totalCount }} opiniones</p>
     </ion-col>
   </ion-row>
   <div>

@@ -8,12 +8,13 @@ const scheduler = require('../../util/scheduler');
 const jobTypes = require('../../jobs/job-types.enum');
 const ApiError = require('../api-error');
 
-const create = async (token, userId) => {
+const create = async (token, userId, paymentRate) => {
   const user = await User.findById(userId);
   const business = await Business.findById(user.business);
+  const rate = appConfig.rates[paymentRate];
 
   const charge = await stripe.charges.create({
-    amount: appConfig.promotionCost,
+    amount: rate.amount,
     currency: 'eur',
     description: 'Promoción del local',
     source: token,
@@ -23,10 +24,7 @@ const create = async (token, userId) => {
     throw new ApiError(500, 'internal server error');
   }
 
-  const validUntilDate = moment().add(
-    appConfig.promotionDurationTime,
-    appConfig.promotionDurationUnit,
-  );
+  const validUntilDate = moment().add(rate.duration, 'day');
 
   business.isPromoted = true;
   await business.save();

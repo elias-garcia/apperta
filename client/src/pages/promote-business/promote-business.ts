@@ -16,6 +16,7 @@ export class PromoteBusinessPage {
   public business: Business;
   public card: any;
   public isFormButtonDisabled = false;
+  public paymentRate = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -75,8 +76,6 @@ export class PromoteBusinessPage {
   }
 
   onSubmitStripeForm() {
-    this.isFormButtonDisabled = true;
-
     const loading = this.loadingCtrl.create({
       content: 'Por favor, espere...'
     });
@@ -96,7 +95,7 @@ export class PromoteBusinessPage {
   }
 
   promoteBusiness(token: string, loading: Loading) {
-    this.businessProvider.promoteBusiness(token).subscribe(
+    this.businessProvider.promoteBusiness(token, this.paymentRate).subscribe(
       (res: any) => {
         loading.dismiss();
         this.navCtrl.pop();

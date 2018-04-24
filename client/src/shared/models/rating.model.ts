@@ -7,4 +7,6 @@ export interface Rating {
   comment: string;
   user: User;
   business: string;
+  createdAt: string;
+  updatedAt: string;
 }

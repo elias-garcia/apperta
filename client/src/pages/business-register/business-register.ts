@@ -76,6 +76,7 @@ export class BusinessRegisterPage {
   createForm() {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
+      description: ['', Validators.required],
       phone: ['', Validators.required],
       type: [null, Validators.required],
       location: ['', Validators.required],
@@ -96,6 +97,7 @@ export class BusinessRegisterPage {
   patchFormValues(loading: Loading) {
     this.registerForm.patchValue({
       name: this.business.name,
+      description: this.business.description,
       phone: this.business.phone,
       type: this.business.type,
       location: this.business.location.address,
@@ -321,6 +323,7 @@ export class BusinessRegisterPage {
           if (results && results[0]) {
             const registerData: BusinessRegisterData = {
               name: this.name.value,
+              description: this.description.value,
               phone: this.phone.value,
               type: this.type.value,
               location: {
@@ -445,6 +448,10 @@ export class BusinessRegisterPage {
 
   get name(): AbstractControl {
     return this.registerForm.get('name');
+  }
+
+  get description(): AbstractControl {
+    return this.registerForm.get('description');
   }
 
   get phone(): AbstractControl {

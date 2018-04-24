@@ -15,6 +15,7 @@ import { JSONInterceptor } from '../interceptors/json.interceptor';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { BusinessProvider } from '../providers/business.provider';
 import { GeolocationProvider } from '../providers/geolocation.provider';
+import { ErrorInterceptor } from '../interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,9 @@ import { GeolocationProvider } from '../providers/geolocation.provider';
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      backButtonText: 'Atrás'
+    }),
     IonicStorageModule.forRoot(),
     HomePageModule,
     ProfilePageModule,
@@ -43,6 +46,11 @@ import { GeolocationProvider } from '../providers/geolocation.provider';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true
     },
     { provide: ErrorHandler, useClass: IonicErrorHandler },

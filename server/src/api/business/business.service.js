@@ -4,7 +4,7 @@ const Business = require('./business.model');
 const User = require('../user/user.model');
 const Rating = require('./rating/rating.model');
 
-const create = async (ownerId, name, phone, type, location, cover) => {
+const create = async (ownerId, name, description, phone, type, location, cover) => {
   const user = await User.findById(ownerId);
 
   if (user.business && Object.keys(user.business)) {
@@ -14,6 +14,7 @@ const create = async (ownerId, name, phone, type, location, cover) => {
   let business = await Business.create({
     owner: ownerId,
     name,
+    description,
     phone,
     type,
     location: {
@@ -38,7 +39,7 @@ const create = async (ownerId, name, phone, type, location, cover) => {
   return business;
 };
 
-const update = async (userId, businessId, name, phone, type, location, cover) => {
+const update = async (userId, businessId, name, description, phone, type, location, cover) => {
   let business = await Business.findById(businessId);
 
   if (business.owner.toString() !== userId) {
@@ -46,6 +47,7 @@ const update = async (userId, businessId, name, phone, type, location, cover) =>
   }
 
   business.name = name;
+  business.description = description;
   business.phone = phone;
   business.type = type;
   business.location.address = location.address;

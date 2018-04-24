@@ -1,0 +1,13 @@
+rating-dots {
+
+  .stars {
+    display: flex;
+  }
+
+  .star > .icon {
+      margin-left: 2px;
+      margin-bottom: 0;
+      font-size: 1.2em;
+  }
+
+}

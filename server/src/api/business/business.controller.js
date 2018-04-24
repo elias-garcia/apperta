@@ -9,6 +9,7 @@ const businessDto = require('./business.dto');
 const create = async (req, res, next) => {
   try {
     if (!req.body.name
+      || !req.body.description
       || !req.body.phone
       || !req.body.type
       || !req.body.location
@@ -21,6 +22,7 @@ const create = async (req, res, next) => {
     const business = await businessService.create(
       req.user.sub,
       req.body.name,
+      req.body.description,
       req.body.phone,
       req.body.type,
       req.body.location,
@@ -37,6 +39,7 @@ const update = async (req, res, next) => {
   try {
     if (!req.params.id
       || !req.body.name
+      || !req.body.description
       || !req.body.phone
       || !req.body.type
       || !req.body.location
@@ -50,6 +53,7 @@ const update = async (req, res, next) => {
       req.user.sub,
       req.params.id,
       req.body.name,
+      req.body.description,
       req.body.phone,
       req.body.type,
       req.body.location,

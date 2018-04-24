@@ -11,6 +11,7 @@ export interface Business {
   id: string;
   owner: any;
   name: string;
+  description: string;
   phone: number;
   type: BusinessType;
   location: {

@@ -119,3 +119,7 @@ $colors: (
     box-shadow: inset 0 -1px 0 0 #f53d3d !important;
   }
 }
+
+.card, .button, .small-img, .searchbar-input {
+  border-radius: 8px !important;
+}

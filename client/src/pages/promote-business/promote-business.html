@@ -11,15 +11,26 @@
     </div>
     <div *ngIf="!business.isPromoted"
          padding>
-      <p text-justify>La función promocionar tu negocio hará que tu negocio aparezca entre los primeros resultados de todas las búsquedas
+      <p>La función promocionar tu negocio hará que tu negocio aparezca entre los primeros resultados de todas las búsquedas
         relacionadas con él durante un período de un mes.</p>
-      <p>Tarifa:
-        <span>
-          <b>1,99€</b>
-        </span>
-      </p>
     </div>
   </div>
+  <ion-list radio-group
+            [(ngModel)]="paymentRate"
+            *ngIf="business && !business.isPromoted">
+    <ion-list-header>
+      Tarifas
+    </ion-list-header>
+    <ion-item>
+      <ion-label>1 día - 2.99€</ion-label>
+      <ion-radio value="0"
+                 checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>1 semana - 9.99€</ion-label>
+      <ion-radio value="1"></ion-radio>
+    </ion-item>
+  </ion-list>
   <ion-list *ngIf="!business?.isPromoted">
     <ion-list-header *ngIf="business && !business.isPromoted">
       Tarjeta de crédito o de débito
@@ -36,7 +47,9 @@
                 ion-button
                 type="submit"
                 full
-                [disabled]="isFormButtonDisabled">Promocionar negocio</button>
+                [disabled]="isFormButtonDisabled">
+          <b>Promocionar negocio</b>
+        </button>
       </form>
     </div>
   </ion-list>

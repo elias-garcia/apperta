@@ -6,8 +6,6 @@ const userDto = require('../../user/user.dto');
 const toRatingDto = (doc) => {
   const ret = dto.transform(doc);
 
-  delete ret.createdAt;
-  delete ret.updatedAt;
   ret.user = userDto.toUserDto(ret.user);
 
   return ret;

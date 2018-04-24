@@ -46,6 +46,13 @@
                  class="label-error">La ubicación es obligatoria</ion-label>
       <ion-label *ngIf="location.hasError('notValidLocation') && location.touched && location.dirty"
                  class="label-error">La ubicación no es válida</ion-label>
+      <ion-item>
+        <ion-textarea formControlName="description"
+                      placeholder="Descripción"
+                      rows="5"></ion-textarea>
+      </ion-item>
+      <ion-label *ngIf="description.invalid && description.touched && description.dirty"
+                 class="label-error">La ubicación es obligatoria</ion-label>
     </ion-list>
     <ion-list class="second-list">
       <ion-list-header>
@@ -53,9 +60,11 @@
       </ion-list-header>
       <ion-item class="item-img">
         <img *ngIf="!cover.value"
+             class="small-img"
              src="assets/imgs/img-placeholder.png"
              (click)="onOpenFilePicker()">
         <img *ngIf="cover.value"
+             class="small-img"
              [src]="cover.value"
              (click)="onOpenFilePicker()">
         <input #coverImageInput
@@ -91,6 +100,7 @@
               <ion-col col-4
                        *ngFor="let galleryImage of galleryImages.value; let i = index">
                 <img [src]="galleryImage"
+                     class="small-img"
                      (click)="onGalleryImageClick(i)">
               </ion-col>
             </ion-row>
@@ -102,11 +112,13 @@
               <ion-col col-4
                        *ngFor="let galleryImage of galleryImages.value; let i = index">
                 <img [src]="galleryImage.url"
+                     class="small-img"
                      (click)="onGalleryImageClick(i)">
               </ion-col>
               <ion-col col-4
                        *ngFor="let tempGalleryImage of tempGalleryImages; let i = index">
                 <img [src]="tempGalleryImage"
+                     class="small-img"
                      (click)="onTempGalleryImageClick(i)">
               </ion-col>
             </ion-row>

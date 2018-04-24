@@ -1,6 +1,10 @@
 <ion-header>
   <ion-navbar no-border-bottom
               color="primary">
+    <button ion-button
+            menuToggle="menu">
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Inicio</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top
@@ -28,9 +32,7 @@
             </ion-card-title>
             <div class="avg-rating"
                  *ngIf="business.avgRating > 0">
-              <h2>{{ business.avgRating }}</h2>
-              <ion-icon name="star"
-                        class="star-icon"></ion-icon>
+              <rating-dots [avgRating]="business.avgRating"></rating-dots>
             </div>
             <div text-center
                  class="avg-rating"

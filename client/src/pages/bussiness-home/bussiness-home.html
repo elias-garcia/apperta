@@ -1,17 +1,33 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <ion-title>{{ business?.name }}</ion-title>
+  <ion-navbar color="primary"
+              [ngClass]="{'navbar-hidden': !isHeaderVisible, 'navbar-show': isHeaderVisible}">
+    <ion-title *ngIf="isHeaderVisible">{{ business?.name }}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content>
+<ion-content (ionScroll)="onScroll($event)">
   <ng-container *ngIf="business">
     <img [src]="business.cover.url"
          class="img-header"
          width="100%" />
-    <ion-list>
+    <h1 class="name">{{ business.name }}</h1>
+    <div class="rating-dots-small">
+      <rating-dots [avgRating]="business.avgRating"></rating-dots>
+      <p>{{ ratingStats?.totalCount }} opiniones</p>
+    </div>
+    <div class="call-button">
+      <a ion-button
+         full
+         color="default"
+         [href]="'tel:' + business.phone">
+        <ion-icon name="call"></ion-icon>Llamar</a>
+    </div>
+    <ion-list class="first-list">
       <ion-list-header>
-        Acerca de
+        Información
       </ion-list-header>
+      <ion-item class="item-description">
+        {{ business.description }}
+      </ion-item>
       <button ion-item
               detail-push
               text-wrap
@@ -36,7 +52,8 @@
                     slidesPerView="3"
                     spaceBetween="10">
           <ion-slide *ngFor="let image of business.images.slice(0, 6)">
-            <img [src]="image.url"
+            <img class="small-img"
+                 [src]="image.url"
                  (click)="onViewPhoto(image)" />
           </ion-slide>
           <ion-slide>
@@ -52,7 +69,8 @@
         </p>
       </ion-item>
     </ion-list>
-    <ion-list *ngIf="navParams.get('mode') === 'view' && ratings && ratingStats">
+    <ion-list *ngIf="navParams.get('mode') === 'view' && ratings && ratingStats"
+              class="last-list">
       <ion-list-header>
         Opiniones
       </ion-list-header>
@@ -74,7 +92,7 @@
                 <ion-icon *ngFor="let score of Array(rating.score)"
                           name="star"></ion-icon>
               </div>
-              <p>28 Mar. 2018</p>
+              <p>{{ rating.createdAt | date:'dd/MM/yyyy' }}</p>
             </div>
             <p class="rating-details">{{ rating.comment }}</p>
           </div>

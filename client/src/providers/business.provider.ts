@@ -75,8 +75,8 @@ export class BusinessProvider {
     return this.http.get(`${environment.apiUrl}/businesses/${businessId}/ratings`, { params });
   }
 
-  promoteBusiness(token: string) {
-    return this.http.post(`${environment.apiUrl}/payments`, { token });
+  promoteBusiness(token: string, paymentRate: number) {
+    return this.http.post(`${environment.apiUrl}/payments`, { token, paymentRate });
   }
 
 }

@@ -1,8 +1,25 @@
-<ion-tabs>
-  <ion-tab tabIcon="compass"
-           tabTitle="Explorar"
-           [root]="homePage"></ion-tab>
-  <ion-tab tabIcon="contact"
-           tabTitle="Mi perfil"
-           [root]="profilePage"></ion-tab>
-</ion-tabs>`
+<ion-menu [content]="content"
+          id="menu">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item
+              menuClose
+              (click)="openPage(homePage)">
+        Inicio
+      </button>
+      <button ion-item
+              menuClose
+              (click)="openPage(profilePage)">
+        Mi Perfil
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav id="nav"
+         #content
+         [root]="homePage"></ion-nav>

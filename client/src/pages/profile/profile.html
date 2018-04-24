@@ -1,5 +1,9 @@
 <ion-header>
   <ion-navbar color="primary">
+    <button ion-button
+            menuToggle="menu">
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Mi perfil</ion-title>
   </ion-navbar>
 </ion-header>
@@ -48,14 +52,14 @@
                 item-start></ion-icon>
       Editar negocio
     </button>
-    <button *ngIf="session && session.business"
+    <!-- <button *ngIf="session && session.business"
             ion-item
             detail-push
             (click)="onOpenPromoteBusinessPage()">
       <ion-icon name="cash"
                 item-start></ion-icon>
       Promocionar negocio
-    </button>
+    </button> -->
     <button ion-item
             detail-push
             (click)="onOpenEditProfilePage()">

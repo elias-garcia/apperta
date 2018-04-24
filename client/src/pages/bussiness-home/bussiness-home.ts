@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, LoadingController, Loading, ToastController, Alert, AlertController, Toast } from 'ionic-angular';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { NavController, NavParams, ModalController, LoadingController, Loading, ToastController, Alert, AlertController, Toast, ScrollEvent } from 'ionic-angular';
 import { GalleryPage } from '../gallery/gallery';
 import { SingleImagePage } from '../../shared/pages/single-image/single-image';
 import { MapsPage } from '../maps/maps';
@@ -26,6 +26,7 @@ export class BussinessHomePage {
   public business: Business;
   public ratings: Rating[];
   public ratingStats: RatingStats;
+  public isHeaderVisible = false;
 
   constructor(
     public navCtrl: NavController,
@@ -35,9 +36,9 @@ export class BussinessHomePage {
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     private securityProvider: SecurityProvider,
-    private businessProvider: BusinessProvider
-  ) {
-  }
+    private businessProvider: BusinessProvider,
+    private changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ionViewWillEnter() {
     const loading: Loading = this.loadingCtrl.create({
@@ -49,6 +50,17 @@ export class BussinessHomePage {
       this.getSession();
       this.getRatings(loading);
     });
+  }
+
+  onScroll(event: ScrollEvent) {
+    if (event.scrollTop > 190 && !this.isHeaderVisible) {
+      this.isHeaderVisible = true;
+      this.changeDetectorRef.detectChanges();
+    }
+    if (event.scrollTop < 190 && this.isHeaderVisible) {
+      this.isHeaderVisible = false;
+      this.changeDetectorRef.detectChanges();
+    }
   }
 
   getSession() {

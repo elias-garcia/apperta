@@ -1,0 +1,9 @@
+<div class="stars">
+  <div class="star"
+       *ngFor="let starValue of starsValues">
+    <ion-icon *ngIf="starValue"
+              name="radio-button-on"></ion-icon>
+    <ion-icon *ngIf="!starValue"
+              name="radio-button-off"></ion-icon>
+  </div>
+</div>
