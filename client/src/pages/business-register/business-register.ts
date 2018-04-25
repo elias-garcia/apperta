@@ -47,7 +47,7 @@ export class BusinessRegisterPage {
     private loadingCtrl: LoadingController,
     private securityProvider: SecurityProvider,
     private geolocationProvider: GeolocationProvider,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
   ) {
     this.createForm();
   }
@@ -146,11 +146,11 @@ export class BusinessRegisterPage {
   }
 
   onCoverImageInputChange() {
-    const files: FileList = this.coverImageInput.nativeElement.files;
+    const file: File = this.coverImageInput.nativeElement.files[0];
 
-    if (files[0]) {
-      const file: File = this.coverImageInput.nativeElement.files[0];
+    this.coverImageInput.nativeElement.value = '';
 
+    if (file) {
       if (this.filesExceedsMaxSizes([file])) {
         const alert = this.alertCtrl.create({
           title: 'La foto es demasiado grande',
@@ -159,10 +159,23 @@ export class BusinessRegisterPage {
         });
 
         alert.present();
-        this.coverImageInput.nativeElement.value = '';
-      } else {
-        this.readCoverImage(file);
+
+        return;
       }
+
+      if (this.filesTypeNotValid([file])) {
+        const alert = this.alertCtrl.create({
+          title: 'El formato de la foto no es válido',
+          subTitle: 'Por favor, selecciona una foto con formato .jpg o .png',
+          buttons: ['Entendido']
+        });
+
+        alert.present();
+
+        return;
+      }
+
+      this.readCoverImage(file);
     }
   }
 
@@ -194,22 +207,40 @@ export class BusinessRegisterPage {
         });
 
         alert.present();
-      } else {
-        Array.from(files).forEach((file: File) => {
-          const fileReader = new FileReader();
 
-          fileReader.onloadend = (event: any) => {
-            if (this.navParams.get('mode') === 'edit') {
-              this.tempGalleryImages.push(event.target.result);
-            } else {
-              this.galleryImages.patchValue([...this.galleryImages.value, event.target.result]);
-            }
-          };
-
-          fileReader.readAsDataURL(file);
-        });
+        return;
       }
+
+      if (this.filesTypeNotValid(Array.from(files))) {
+        const alert = this.alertCtrl.create({
+          title: 'El formato de alguna foto no es válido',
+          subTitle: 'Por favor, selecciona fotos con formato .jpg o .png',
+          buttons: ['Entendido']
+        });
+
+        alert.present();
+
+        return;
+      }
+
+      Array.from(files).forEach((file: File) => {
+        this.readGalleryImage(file);
+      });
     }
+  }
+
+  readGalleryImage(file: File) {
+    const fileReader = new FileReader();
+
+    fileReader.onloadend = (event: any) => {
+      if (this.navParams.get('mode') === 'edit') {
+        this.tempGalleryImages.push(event.target.result);
+      } else {
+        this.galleryImages.patchValue([...this.galleryImages.value, event.target.result]);
+      }
+    };
+
+    fileReader.readAsDataURL(file);
   }
 
   onGalleryImageClick(index: number) {
@@ -304,6 +335,14 @@ export class BusinessRegisterPage {
     });
 
     return bigFiles.length;
+  }
+
+  filesTypeNotValid(arr: File[]) {
+    const notValidFiles = arr.filter((file: File) => {
+      return file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== 'image/png';
+    });
+
+    return notValidFiles.length;
   }
 
   removeFromArrayByIndex(index: number, arr: any[]) {

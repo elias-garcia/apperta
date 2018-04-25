@@ -70,7 +70,7 @@
         <input #coverImageInput
                hidden="true"
                type="file"
-               accept=".jpg, .jpeg, .png"
+               accept="image/*"
                (change)="onCoverImageInputChange()">
       </ion-item>
       <ion-label *ngIf="cover.hasError('required') && cover.touched && cover.dirty"
@@ -82,10 +82,10 @@
       </ion-list-header>
       <div class="upload-images-button-wrapper">
         <input #galleryImageInput
-               multiple
                hidden="true"
                type="file"
-               accept=".jpg, .jpeg, .png"
+               accept="image/*"
+               multiple
                (change)="onGalleryImageInputChange()">
         <button class="upload-images-button"
                 ion-button
