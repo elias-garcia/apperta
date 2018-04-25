@@ -60,11 +60,9 @@ export class BusinessRegisterPage {
     });
 
     loading.present().then(() => {
-      console.log('wtf');
       this.securityProvider.getSession().subscribe(
         (session: Session) => {
           this.session = session;
-          console.log(session);
           if (this.navParams.get('mode') === 'edit' && session && session.business) {
             this.getBusiness(session.business, loading);
           } else {

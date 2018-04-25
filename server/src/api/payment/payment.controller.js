@@ -5,7 +5,6 @@ const dto = require('../../util/dto');
 const appConfig = require('../../config/app.config');
 
 const create = async (req, res, next) => {
-  console.log(req.body.paymentRate > (appConfig.rates.length - 1));
   try {
     if (!req.body.token
       || req.body.paymentRate < 0
