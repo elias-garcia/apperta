@@ -86,7 +86,7 @@
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <plugin name="cordova-sqlite-storage" spec="^2.2.1" />
     <allow-navigation href="http://192.168.0.27:8100" />
-    <engine name="ios" spec="4.5.4" />
     <allow-navigation href="http://192.168.1.138:8100" />
-    <engine name="android" spec="~7.0.0" />
+    <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="7.0.0" />
 </widget>

@@ -56,6 +56,7 @@ export class LoginPage {
 
         this.userProvider.login(loginData).subscribe(
           (res: any) => {
+            console.log(res);
             this.securityProvider.storeSession(res.session);
             loading.dismiss();
             this.navCtrl.pop();

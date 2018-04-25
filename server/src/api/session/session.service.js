@@ -21,14 +21,21 @@ const logIn = async (email, password) => {
     { expiresIn: appConfig.jwtMaxAge },
   );
 
-  return {
+  const session = {
     userId: user.id,
     firstName: user.firstName,
     lastName: user.lastName,
     role: user.role,
     token,
-    business: user.business,
   };
+
+  if (user.business) {
+    session.business = user.business;
+  } else {
+    session.business = '';
+  }
+
+  return session;
 };
 
 module.exports = {

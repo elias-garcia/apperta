@@ -55,22 +55,24 @@ export class BusinessRegisterPage {
   ionViewDidLoad() {
     this.initAutocomplete();
 
-    if (this.navParams.get('mode') === 'edit') {
-      const loading = this.loadingCtrl.create({
-        content: 'Cargando...'
-      });
+    const loading = this.loadingCtrl.create({
+      content: 'Cargando...'
+    });
 
-      loading.present().then(() => {
-        this.securityProvider.getSession().subscribe(
-          (session: Session) => {
-            this.session = session;
-            if (session && session.business) {
-              this.getBusiness(session.business, loading);
-            }
+    loading.present().then(() => {
+      console.log('wtf');
+      this.securityProvider.getSession().subscribe(
+        (session: Session) => {
+          this.session = session;
+          console.log(session);
+          if (this.navParams.get('mode') === 'edit' && session && session.business) {
+            this.getBusiness(session.business, loading);
+          } else {
+            loading.dismiss();
           }
-        );
-      });
-    }
+        }
+      );
+    });
   }
 
   createForm() {
