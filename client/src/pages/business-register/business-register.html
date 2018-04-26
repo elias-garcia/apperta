@@ -53,6 +53,11 @@
       </ion-item>
       <ion-label *ngIf="description.invalid && description.touched && description.dirty"
                  class="label-error">La ubicación es obligatoria</ion-label>
+      <ion-item>
+        <ion-label>Realiza envíos a domicilio</ion-label>
+        <ion-checkbox color="primary"
+                      formControlName="homeDeliveries"></ion-checkbox>
+      </ion-item>
     </ion-list>
     <ion-list class="second-list">
       <ion-list-header>

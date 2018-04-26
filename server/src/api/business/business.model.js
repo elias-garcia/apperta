@@ -45,6 +45,10 @@ const businessSchema = new mongoose.Schema({
     enum: Object.keys(BusinessType).map(key => BusinessType[key]),
     required: true,
   },
+  homeDeliveries: {
+    type: Boolean,
+    required: true,
+  },
   status: {
     type: String,
     enum: Object.keys(BusinessStatus).map(key => BusinessStatus[key]),

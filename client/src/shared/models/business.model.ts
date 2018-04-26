@@ -19,6 +19,7 @@ export interface Business {
     address: string,
     coordinates: [number, number]
   };
+  homeDeliveries: boolean;
   isPromoted: boolean;
   avgRating?: number;
   cover: Image;

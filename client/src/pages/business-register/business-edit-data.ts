@@ -6,5 +6,6 @@ export interface BusinessEditData {
   phone: string;
   type: BusinessType;
   location: [number, number];
+  homeDeliveries: boolean;
   cover?: string;
 }

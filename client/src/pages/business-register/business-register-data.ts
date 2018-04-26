@@ -9,5 +9,6 @@ export interface BusinessRegisterData {
     address: string,
     coordinates: [number, number]
   };
+  homeDeliveries: boolean;
   cover: string;
 }

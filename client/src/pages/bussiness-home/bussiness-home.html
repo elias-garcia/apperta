@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header [ngClass]="{'header-hidden': !isHeaderVisible}">
   <ion-navbar color="primary"
               [ngClass]="{'navbar-hidden': !isHeaderVisible, 'navbar-show': isHeaderVisible}">
     <ion-title *ngIf="isHeaderVisible">{{ business?.name }}</ion-title>
@@ -16,11 +16,14 @@
     </div>
     <div class="call-button">
       <a ion-button
+         class="disable-hover"
          full
          color="default"
          [href]="'tel:' + business.phone">
         <ion-icon name="call"></ion-icon>Llamar</a>
     </div>
+    <h6 class="home-deliveries-text"
+        *ngIf="business.homeDeliveries">Realiza envíos a domicilio.</h6>
     <ion-list class="first-list">
       <ion-list-header>
         Información

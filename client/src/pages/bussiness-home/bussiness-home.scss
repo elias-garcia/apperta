@@ -4,6 +4,10 @@ page-bussiness-home {
     position: fixed;
   }
 
+  .header-hidden.header-md::after {
+    background-image: none;
+  }
+
   .navbar-hidden > .toolbar-background {
     border-width: 0 !important;
     background-color: transparent;
@@ -44,8 +48,8 @@ page-bussiness-home {
   }
 
   .call-button {
-    padding: 8px 16px;
-    margin-bottom: 16px;
+    padding: 0px 16px;
+    margin: 8px 0;
     .icon {
       margin-right: 8px;
     }
@@ -53,6 +57,10 @@ page-bussiness-home {
       background-color: color($colors, tripadvisor);
       margin: 0;
     }
+  }
+
+  .home-deliveries-text {
+    padding: 0 16px;
   }
 
   .first-list {

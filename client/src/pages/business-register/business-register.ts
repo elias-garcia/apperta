@@ -80,6 +80,7 @@ export class BusinessRegisterPage {
       phone: ['', Validators.required],
       type: [null, Validators.required],
       location: ['', Validators.required],
+      homeDeliveries: [false, Validators.required],
       cover: ['', Validators.required],
       galleryImages: [[]]
     });
@@ -101,6 +102,7 @@ export class BusinessRegisterPage {
       phone: this.business.phone,
       type: this.business.type,
       location: this.business.location.address,
+      homeDeliveries: this.business.homeDeliveries,
       cover: this.business.cover.url,
       galleryImages: this.business.images
     });
@@ -369,6 +371,7 @@ export class BusinessRegisterPage {
                 address: this.location.value,
                 coordinates: [results[0].geometry.location.lat(), results[0].geometry.location.lng()]
               },
+              homeDeliveries: this.homeDeliveries.value,
               cover: this.cover.value
             };
 
@@ -503,6 +506,10 @@ export class BusinessRegisterPage {
 
   get location(): AbstractControl {
     return this.registerForm.get('location');
+  }
+
+  get homeDeliveries(): AbstractControl {
+    return this.registerForm.get('homeDeliveries');
   }
 
   get cover(): AbstractControl {

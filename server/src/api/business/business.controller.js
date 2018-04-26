@@ -15,6 +15,7 @@ const create = async (req, res, next) => {
       || !req.body.location
       || !req.body.location.address
       || !req.body.location.coordinates
+      || (req.body.homeDeliveries === undefined)
       || !req.body.cover) {
       throw new ApiError(422, 'unprocessable entity');
     }
@@ -26,6 +27,7 @@ const create = async (req, res, next) => {
       req.body.phone,
       req.body.type,
       req.body.location,
+      req.body.homeDeliveries,
       req.body.cover,
     );
 
@@ -45,6 +47,7 @@ const update = async (req, res, next) => {
       || !req.body.location
       || !req.body.location.address
       || !req.body.location.coordinates
+      || (req.body.homeDeliveries === undefined)
       || !req.body.cover) {
       throw new ApiError(422, 'unprocessable entity');
     }
@@ -57,6 +60,7 @@ const update = async (req, res, next) => {
       req.body.phone,
       req.body.type,
       req.body.location,
+      req.body.homeDeliveries,
       req.body.cover,
     );
 

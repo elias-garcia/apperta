@@ -4,7 +4,7 @@ const Business = require('./business.model');
 const User = require('../user/user.model');
 const Rating = require('./rating/rating.model');
 
-const create = async (ownerId, name, description, phone, type, location, cover) => {
+const create = async (ownerId, name, description, phone, type, location, homeDeliveries, cover) => {
   const user = await User.findById(ownerId);
 
   if (user.business && Object.keys(user.business)) {
@@ -21,6 +21,7 @@ const create = async (ownerId, name, description, phone, type, location, cover) 
       address: location.address,
       coordinates: location.coordinates,
     },
+    homeDeliveries,
   });
 
   await cloudinary.uploader.upload(cover, async (result) => {
@@ -39,7 +40,8 @@ const create = async (ownerId, name, description, phone, type, location, cover) 
   return business;
 };
 
-const update = async (userId, businessId, name, description, phone, type, location, cover) => {
+const update = async (userId, businessId, name, description,
+  phone, type, location, homeDeliveries, cover) => {
   let business = await Business.findById(businessId);
 
   if (business.owner.toString() !== userId) {
@@ -52,6 +54,7 @@ const update = async (userId, businessId, name, description, phone, type, locati
   business.type = type;
   business.location.address = location.address;
   business.location.coordinates = location.coordinates;
+  business.homeDeliveries = homeDeliveries;
 
   if (!cover.includes('cloudinary')) {
     await cloudinary.uploader.upload(cover, async (result) => {
@@ -126,7 +129,7 @@ const changeStatus = async (userId, businessId, status) => {
 
 const remove = async (userId, businessId) => {
   const business = await Business.findById(businessId);
-
+  console.log(business);
   if (business.owner.toString() !== userId) {
     throw new ApiError(403, 'forbidden');
   }
