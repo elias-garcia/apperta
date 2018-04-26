@@ -129,7 +129,7 @@ const changeStatus = async (userId, businessId, status) => {
 
 const remove = async (userId, businessId) => {
   const business = await Business.findById(businessId);
-  console.log(business);
+
   if (business.owner.toString() !== userId) {
     throw new ApiError(403, 'forbidden');
   }
