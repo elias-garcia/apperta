@@ -62,7 +62,7 @@ export class PasswordResetPage {
               this.showMessage('Código enviado con éxito')
               break;
             case 404:
-              this.email.setErrors({ 'emailDoesNotExist': true });
+              this.email.setErrors({ emailDoesNotExist: true });
               break
             default:
               if (error.status !== 401) {

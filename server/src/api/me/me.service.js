@@ -91,9 +91,42 @@ const remove = async (userId) => {
   await user.remove();
 };
 
+const activateUser = async (email, token) => {
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(404, 'user not found');
+  }
+
+  if (!bcrypt.compareSync(token, user.activationToken)) {
+    throw new ApiError(403, 'activation token does not match');
+  }
+
+  user.isActive = true;
+  user.activationToken = undefined;
+
+  await user.save();
+
+  const sessionToken = jwt.sign(
+    { sub: user.id },
+    appConfig.jwtSecret,
+    { expiresIn: appConfig.jwtMaxAge },
+  );
+
+  return {
+    userId: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    role: user.role,
+    token: sessionToken,
+    business: undefined,
+  };
+};
+
 module.exports = {
   updateUserDetails,
   updatePassword,
   resetPassword,
   remove,
+  activateUser,
 };

@@ -1,9 +1,10 @@
 const router = require('express').Router();
-const meService = require('./me.controller');
+const meController = require('./me.controller');
 
-router.put('/', meService.updateUserDetails);
-router.patch('/', meService.updatePassword);
-router.delete('/', meService.remove);
-router.put('/password', meService.resetPassword);
+router.put('/', meController.updateUserDetails);
+router.patch('/', meController.updatePassword);
+router.delete('/', meController.remove);
+router.put('/password', meController.resetPassword);
+router.post('/activation', meController.activateUser);
 
 module.exports = router;

@@ -38,4 +38,8 @@ export class UserProvider {
     return this.http.put(`${environment.apiUrl}/me/password`, passwordResetData);
   }
 
+  activateUser(email: string, token: string) {
+    return this.http.post(`${environment.apiUrl}/me/activation`, { email, token });
+  }
+
 }

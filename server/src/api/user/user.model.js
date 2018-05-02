@@ -21,6 +21,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isActive: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  activationToken: {
+    type: String,
+    required: false,
+  },
   role: {
     type: String,
     enum: Object.keys(Roles).map(key => Roles[key]),

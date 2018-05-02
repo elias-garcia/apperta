@@ -12,14 +12,14 @@ const create = async (req, res, next) => {
       throw new ApiError(422, 'unprocessable entity');
     }
 
-    const session = await userService.register(
+    const user = await userService.register(
       req.body.email,
       String(req.body.password),
       req.body.firstName,
       req.body.lastName,
     );
 
-    return res.status(201).json(json.createData([{ title: 'session', data: session }]));
+    return res.status(200).json(json.createData([{ title: 'user', data: userDto.toUserDto(user) }]));
   } catch (err) {
     return next(err);
   }

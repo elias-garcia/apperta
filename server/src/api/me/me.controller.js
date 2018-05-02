@@ -55,7 +55,7 @@ const resetPassword = async (req, res, next) => {
     }
 
     const session = await meService.resetPassword(
-      req.body.email,
+      req.body.email.toLowerCase(),
       req.body.token,
       String(req.body.newPassword),
     );
@@ -76,9 +76,28 @@ const remove = async (req, res, next) => {
   }
 };
 
+const activateUser = async (req, res, next) => {
+  try {
+    if (!req.body.email
+      || !req.body.token) {
+      throw new ApiError(422, 'unprocessable entity');
+    }
+
+    const session = await meService.activateUser(
+      req.body.email.toLowerCase(),
+      req.body.token,
+    );
+
+    return res.status(200).json(json.createData([{ title: 'session', data: session }]));
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = {
   updateUserDetails,
   updatePassword,
   resetPassword,
   remove,
+  activateUser,
 };

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, LoadingController, ToastController, Loading, Toast } from 'ionic-angular';
+import { NavController, NavParams, ViewController, LoadingController, ToastController, Loading, Toast, ModalController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { validateEmail } from '../../shared/validators/email.validator';
 import { validatePasswordMatch } from '../../shared/validators/password-match.validator';
@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Session } from '../../shared/models/session.model';
 import { User } from '../../shared/models/user.model';
 import { take } from 'rxjs/operators';
+import { UserConfirmPage } from '../user-confirm/user-confirm';
 
 @Component({
   selector: 'page-register',
@@ -24,6 +25,7 @@ export class RegisterPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
+    public modalCtrl: ModalController,
     private fb: FormBuilder,
     private userProvider: UserProvider,
     private securityProvider: SecurityProvider,
@@ -97,10 +99,13 @@ export class RegisterPage {
 
       this.userProvider.registerUser(registerData).subscribe(
         (res: any) => {
-          this.securityProvider.storeSession(res.session);
+          const userActivationModal = this.modalCtrl.create(UserConfirmPage, { email: res.user.email });
+
           loading.dismiss();
-          this.viewCtrl.dismiss();
-          this.showMessage('Te has registrado con éxito!');
+
+          userActivationModal.present().then(() => {
+            this.viewCtrl.dismiss();
+          });
         },
         (err: HttpErrorResponse) => {
           loading.dismiss();

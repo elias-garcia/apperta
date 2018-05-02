@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Confirmación de usuario</ion-title>
+    <ion-buttons start>
+      <button ion-button
+              (click)="onCloseModal()">
+        <span ion-text
+              showWhen="ios">Cancelar</span>
+        <ion-icon name="md-close"
+                  showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <p>Se te ha enviado un un código de confirmación a tu cuenta de correo electrónico. Por favor, introdúcelo a continuación
+    para verificar tu email.</p>
+  <ion-list>
+    <form [formGroup]="tokenForm"
+          (submit)="onSubmit()">
+      <ion-item>
+        <ion-input formControlName="token"
+                   type="text"
+                   placeholder="Token"></ion-input>
+      </ion-item>
+      <ion-label *ngIf="(token.hasError('required') && (token.touched && token.dirty))"
+                 class="label-error">El token es obligatorio</ion-label>
+      <ion-label *ngIf="(token.hasError('invalidToken') && (token.touched && token.dirty))"
+                 class="label-error">El token introducido no es válido</ion-label>
+      <button ion-button
+              full
+              type="submit"
+              [disabled]="tokenForm.invalid">Activar usuario</button>
+    </form>
+  </ion-list>
+</ion-content>

@@ -15,6 +15,10 @@ const logIn = async (email, password) => {
     throw new ApiError(403, 'password does not match');
   }
 
+  if (!user.isActive) {
+    throw new ApiError(403, 'user needs to be activated');
+  }
+
   const token = jwt.sign(
     { sub: user.id, role: user.role },
     appConfig.jwtSecret,

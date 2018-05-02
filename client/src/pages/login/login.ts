@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, ToastController, LoadingController, Events, Toast } from 'ionic-angular';
+import { NavController, NavParams, ViewController, ToastController, LoadingController, Events, Toast, ModalController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { LoginData } from './login-data';
 import { UserProvider } from '../../providers/user.provider';
@@ -7,6 +7,7 @@ import { SecurityProvider } from '../../providers/security.provider';
 import { HttpErrorResponse } from '@angular/common/http';
 import { validateEmail } from '../../shared/validators/email.validator';
 import { PasswordResetPage } from '../password-reset/password-reset';
+import { UserConfirmPage } from '../user-confirm/user-confirm';
 
 @Component({
   selector: 'page-login',
@@ -20,6 +21,7 @@ export class LoginPage {
     public viewCtrl: ViewController,
     public navCtrl: NavController,
     public navParams: NavParams,
+    public modalCtrl: ModalController,
     public events: Events,
     private fb: FormBuilder,
     private userProvider: UserProvider,
@@ -56,7 +58,6 @@ export class LoginPage {
 
         this.userProvider.login(loginData).subscribe(
           (res: any) => {
-            console.log(res);
             this.securityProvider.storeSession(res.session);
             loading.dismiss();
             this.navCtrl.pop();
@@ -65,10 +66,17 @@ export class LoginPage {
             loading.dismiss();
             if (err.status === 403) {
               if (err.error.message.includes('password')) {
-                this.password.setErrors({ 'passwordDoesNotMatch': true });
+                this.password.setErrors({ passwordDoesNotMatch: true });
               }
               if (err.error.message.includes('email')) {
-                this.email.setErrors({ 'emailDoesNotExist': true });
+                this.email.setErrors({ emailDoesNotExist: true });
+              }
+              if (err.error.message.includes('activated')) {
+                const userActivationModal = this.modalCtrl.create(UserConfirmPage, { email: loginData.email });
+
+                userActivationModal.present().then(() => {
+                  this.viewCtrl.dismiss();
+                });
               }
             } else {
               this.viewCtrl.dismiss();

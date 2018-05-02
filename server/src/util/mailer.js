@@ -6,9 +6,9 @@ const transporter = nodemailer.createTransport(appConfig.mailer);
 const sendPasswordResetToken = async (email, token) => {
   try {
     await transporter.sendMail({
-      from: 'Sender Name <sender@example.com>',
+      from: 'Apperta <info@apperta.me>',
       to: email,
-      subject: 'Apperta - Reestablecer contraseña',
+      subject: 'Reestablecer contraseña',
       text: `Código para reestablecer la contraseña: ${token}`,
       html: `<p>Código para reestablecer la contraseña: ${token}</p>`,
     });
@@ -17,6 +17,21 @@ const sendPasswordResetToken = async (email, token) => {
   }
 };
 
+const sendUserActivationToken = async (email, token) => {
+  try {
+    await transporter.sendMail({
+      from: 'Apperta <info@apperta.me>',
+      to: email,
+      subject: 'Confirmación de email',
+      text: `Código para confirmar el email: ${token}`,
+      html: `<p>Código para confirmar el email: ${token}</p>`,
+    });
+  } catch (err) {
+    throw (err);
+  }
+};
+
 module.exports = {
   sendPasswordResetToken,
+  sendUserActivationToken,
 };
