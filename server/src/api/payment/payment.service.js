@@ -7,11 +7,12 @@ const Payment = require('./payment.model');
 const scheduler = require('../../util/scheduler');
 const jobTypes = require('../../jobs/job-types.enum');
 const ApiError = require('../api-error');
+const paymentRates = require('./payment-rates');
 
 const create = async (token, userId, paymentRate) => {
   const user = await User.findById(userId);
   const business = await Business.findById(user.business);
-  const rate = appConfig.rates[paymentRate];
+  const rate = paymentRates[paymentRate];
 
   const charge = await stripe.charges.create({
     amount: rate.amount,

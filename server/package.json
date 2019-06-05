@@ -27,8 +27,7 @@
     "morgan": "^1.8.2",
     "newrelic": "^3.2.0",
     "nodemailer": "^4.4.0",
-    "stripe": "^5.5.0",
-    "validator": "^8.2.0"
+    "stripe": "^5.5.0"
   },
   "devDependencies": {
     "eslint": "^4.11.0",
