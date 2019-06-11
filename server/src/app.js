@@ -1,6 +1,11 @@
-require('newrelic');
 const express = require('express');
 const config = require('./config/index');
+const appConfig = require('./config/app.config');
+
+if (appConfig.production) {
+  // eslint-disable-next-line global-require
+  require('newrelic');
+}
 
 const app = express();
 

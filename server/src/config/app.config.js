@@ -1,4 +1,5 @@
 module.exports = {
+  production: process.env.NODE_ENV === 'production',
   port: process.env.PORT || 3000,
   mongo: process.env.MONGO_URI || 'mongodb://localhost:27017/apertapp',
   path: '/api',
@@ -25,5 +26,6 @@ module.exports = {
   stripe: {
     pk: process.env.STRIPE_PK || '',
     sk: process.env.STRIPE_SK || '',
-  }
+  },
+  newRelicLicenseKey: process.env.NEW_RELIC_LICENSE_KEY || '',
 };
